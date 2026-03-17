@@ -1,6 +1,6 @@
 # stories — Storybank Workflow
 
-Use `references/storybank-guide.md`.
+Use `references/storybank-guide.md`. Also reference `references/story-seeds.md` for pre-mapped story seeds from the candidate's resume, and `references/pm-competency-framework.md` for competency-based gap analysis.
 
 Menu:
 
@@ -17,17 +17,30 @@ Storybank Menu
 
 ### Adding Stories — Guided Discovery
 
-When the candidate selects "Add," don't jump straight to STAR format. Most people can't produce stories on command. Use the guided exploration prompts from `references/storybank-guide.md` (peak experiences, challenge/growth, impact/influence, failure/learning) to surface stories first, *then* structure them:
+When the candidate selects "Add," first check if `references/story-seeds.md` has a pre-mapped seed for this experience. If so, use the seed's STAR skeleton, round-type mapping, and earned secret prompt to accelerate the process.
+
+If no seed exists, don't jump straight to STAR format. Most people can't produce stories on command. Use the guided exploration prompts from `references/storybank-guide.md` (peak experiences, challenge/growth, impact/influence, failure/learning) to surface stories first, *then* structure them:
 
 1. Ask one reflective prompt at a time. Wait for the response.
 2. Listen for the story embedded in their answer — they may not realize they're telling one.
 3. When you hear a promising story, say: "That's a strong story. Let's capture it." Then walk through STAR.
 4. After STAR, extract the earned secret (see `references/differentiation.md`).
-5. Index it in the storybank table.
+5. **Assign round-type ratings**: Map the story to Business / Product / Technical rounds using ★★★/★★/★ ratings. Ask: "Could you tell this story in a business round? Product round? Technical round? Where would it land strongest?"
+6. **Assess follow-up readiness**: Rate Low / Medium / High based on how well the candidate can handle follow-ups. For seeds with pre-mapped follow-up trees, test a few.
+7. Index it in the storybank table.
+
+**PM/BizOps-specific guided discovery prompts** (use alongside the generic ones from the storybank guide):
+- "Tell me about a time you owned the P&L for something. What surprised you about managing the business side?"
+- "When did you have to convince a C-suite executive to change direction? What was the hardest part?"
+- "Tell me about a product decision where the unit economics fundamentally changed your approach."
+- "When did you build something from zero — no team, no process, no playbook?"
+- "What's the biggest mistake you've made as a PM/operator? Not a 'challenge you overcame' — a real mistake."
+- "Tell me about a marketplace or platform dynamic that surprised you."
+- "When did you have to kill something you built? Why?"
 
 Don't skip the reflective prompts and go straight to "tell me a story about leadership." That produces rehearsed, thin stories. The prompts produce real ones.
 
-**Important**: When adding a story, write the full STAR text to the Story Details section in `coaching_state.md` — not just the index row in the Storybank table. The table is a quick-reference index. The Story Details section is where the actual story lives, including Situation, Task, Action, Result, Earned Secret, deploy use-case, and version history. Without the full text, the coach can't help improve the story in a future session without asking the candidate to retell it from scratch.
+**Important**: When adding a story, write the full STAR text to the Story Details section in `coaching_state.md` — not just the index row in the Storybank table. The table is a quick-reference index. The Story Details section is where the actual story lives, including Situation, Task, Action, Result, Earned Secret, deploy use-case, round-type ratings, and version history. Without the full text, the coach can't help improve the story in a future session without asking the candidate to retell it from scratch.
 
 ### Improving Stories — Structured Upgrade Protocol
 
@@ -77,11 +90,13 @@ See `references/storybank-guide.md` for the full storybank format, column defini
 
 ### Prioritized Gap Analysis
 
-When the candidate selects "Find gaps," don't just list missing competencies — rank them by how much they matter for this candidate's target roles:
+When the candidate selects "Find gaps," don't just list missing competencies — rank them by how much they matter for this candidate's target roles.
 
-1. Cross-reference the candidate's target roles/companies (from `coaching_state.md`) with the storybank's skill coverage. **Check both Primary and Secondary Skills** — a competency may be covered as a secondary skill in an existing story, which changes the gap from "no story" to "Workable coverage" (see `references/story-mapping-engine.md` for fit scoring).
-2. For each gap, assess: **Critical** (this competency will definitely be tested and no story exists, even as a secondary skill), **Important** (likely to come up, only weak stories or secondary-skill-only coverage available), **Nice-to-have** (might come up, but won't make or break the interview).
-3. For critical gaps, check: can an existing story be reframed to cover this competency (using its secondary skill or an adjacent experience), or does the candidate need to surface a new experience entirely?
+**Use `references/pm-competency-framework.md`** to classify competencies by priority for the candidate's target role type. Cross-reference against `references/story-seeds.md` Coverage Analysis to identify pre-known gaps.
+
+1. Cross-reference the candidate's target roles/companies (from `coaching_state.md`) with the storybank's skill coverage. **Check both Primary and Secondary Skills** — a competency may be covered as a secondary skill in an existing story, which changes the gap from "no story" to "Workable coverage" (see `references/story-mapping-engine.md` for fit scoring). Use the PM Competency Framework role-priority matrix to weight gaps.
+2. For each gap, assess: **Critical** (this competency will definitely be tested based on the PM Competency Framework priority matrix and no story exists, even as a secondary skill), **Important** (likely to come up, only weak stories or secondary-skill-only coverage available), **Nice-to-have** (might come up, but won't make or break the interview).
+3. For critical gaps, check: can an existing story be reframed to cover this competency (using its secondary skill or an adjacent experience), or does the candidate need to surface a new experience entirely? Check `references/story-seeds.md` for unused seeds that could fill the gap.
 4. Prescribe gap-handling patterns from the Gap-Handling Module in `references/cross-cutting.md` for any competencies where no real story exists. Use the Pattern Selection by Storybank Score table: strength 2 → Adjacent Bridge, strength 1 → Reframe to Strength or Growth Narrative, no story → Hypothetical with Self-Awareness.
 5. **Cross-reference with active prep briefs**: If the candidate has active prep briefs (from `prep`), check predicted questions against gaps. A gap that maps to a predicted question at a current target company is elevated to Critical regardless of general frequency.
 6. **Consume narrative identity output** (if `stories narrative identity` has been run): Use the candidate's core themes and sharpest edge to inform gap prioritization. Gaps in the candidate's dominant themes are more damaging than gaps in peripheral areas — a candidate whose theme is "building systems from scratch" must have a gap-free story set for process-building and ambiguity questions. Also check for orphan stories that could be reframed to fill a gap through their theme connection.
@@ -147,8 +162,11 @@ Requires 5+ stories in the storybank. If fewer exist, redirect: "Narrative ident
 ## Story Added: [Title]
 - ID: S###
 - Primary Skill:
+- Secondary Skill:
 - Earned Secret:
 - Strength: [1-5]
+- Round Type: Business ★★/★★★ | Product ★★/★★★ | Technical ★/★★
+- Follow-up Readiness: [Low / Medium / High]
 - Deploy for: [one-line use case]
 
 ## Story Red Team (Level 5 only)

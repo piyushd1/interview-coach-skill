@@ -16,9 +16,11 @@ Create a table with these columns:
 | **Secondary Skill** | Additional competency (optional) |
 | **Impact** | Quantified outcome or explanation if not quantifiable |
 | **Domain** | Technical / Product / Business / People |
+| **Round Type** | Which interview rounds this story serves best: Business ★★★ / Product ★★ / Technical ★ (see `references/story-seeds.md` for the rating legend) |
 | **Risk/Stakes** | What could have gone wrong? Why did it matter? |
 | **Earned Secret** | The counterintuitive insight only you learned from this experience (see `references/differentiation.md` for extraction protocol) |
 | **Strength** | How compelling/differentiated (1-5) |
+| **Follow-up Readiness** | How prepared you are for follow-up questions on this story: Low / Medium / High |
 | **Use Count** | Total times used in real interviews (incremented via debrief). Tracks overuse risk. |
 | **Last Used** | Date of most recent use in interview |
 | **Notes** | Performance notes, feedback received |
@@ -30,20 +32,38 @@ The storybank table above is a quick-reference index. The **full STAR text** of 
 ### Skill Tags (standardized)
 
 Use consistent tags for searchability:
+
+**Core PM/Business Operator Tags:**
+- P&L Ownership
+- Unit Economics
+- Marketplace Strategy
+- Platform Strategy
+- Pricing Strategy
+- C-Suite Influence
+- 0-to-1 Building
+- GTM Execution
+- AI/ML Product Thinking
+- Technical Product Leadership
+- Product Sense
+- Business Model Innovation
+
+**General Tags:**
 - Leadership
 - Collaboration
 - Problem-solving
 - Data-driven decision making
 - Communication
-- Technical depth
 - Strategic thinking
 - Ambiguity navigation
 - Conflict resolution
 - Customer focus
-- Innovation
 - Execution/delivery
 - Mentorship
 - Influence without authority
+- Team Building
+- Change Management
+
+**Reference**: See `references/pm-competency-framework.md` for the full competency map with sub-competencies and role-priority ratings. See `references/story-seeds.md` for pre-mapped story seeds from the candidate's resume.
 
 ---
 

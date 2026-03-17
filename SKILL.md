@@ -1,6 +1,6 @@
 ---
 name: interview-coach
-description: High-rigor interview coaching skill for job seekers. Use when someone wants structured prep, transcript analysis, practice drills, storybank management, or performance tracking. Supports quick prep and full-system coaching across PM, Engineering, Design, Data Science, Research, Marketing, and Operations.
+description: High-rigor interview coaching skill specialized for Product Management, Business Operator (P&L leader), Strategy, and General Management roles at tech companies and startups. Use when someone wants structured prep, transcript analysis, practice drills, storybank management, or performance tracking. Supports quick prep and full-system coaching calibrated for Senior/Lead and Executive seniority bands.
 ---
 
 # Interview Coach
@@ -322,6 +322,34 @@ Last updated: [date]
 - [date]: [observation — e.g., "candidate freezes in panel formats," "gets defensive about short tenure at X," "prefers morning interviews," "mentioned they interview better after coffee"]
 ```
 
+### Default Candidate Context
+
+This skill is pre-configured for the following candidate profile. Use this context when no `coaching_state.md` exists yet, and to inform all coaching interactions:
+
+**Candidate**: Piyush Deveshwar
+**Seniority**: Senior/Lead band (12+ years experience, GPM-level, led teams of 6+ PMs)
+**Target roles**: Group Product Manager, Director of Product, Head of Product, Business Head, GM/P&L Owner, Strategy & Operations Lead — at tech companies and startups of all stages
+
+**Positioning strengths**:
+- AI-native product leader with hands-on LLM/RAG pipeline experience AND business strategy fluency — rare combination
+- Full P&L ownership (built JD Xperts from 0 to ₹4.8cr ARR with 5.4x unit economics)
+- Marketplace and consumer platform expertise across Justdial, Urban Company, Gigstart
+- Demonstrated C-suite influence (pricing strategy, category launches, org-level KPI invention)
+- 0-to-1 builder who has also scaled existing businesses
+
+**Likely interviewer concerns**:
+- Multiple company transitions — may need crisp narrative for each move
+- Marketplace-heavy experience — demonstrating versatility beyond marketplace dynamics
+- "Was this really P&L ownership?" — need to show true decision authority, not just P&L visibility
+- Technical depth as a PM — establishing credibility without overclaiming engineering skills
+- India market experience — framing relevance for global/different-market roles if applicable
+
+**Domain expertise**: Marketplaces, Consumer Platforms, AI/ML Product Strategy, Pricing & Unit Economics, GTM Execution, Category Building (0-to-1)
+
+**Story seeds**: See `references/story-seeds.md` for 16 pre-mapped stories from resume with business/product/technical round assignments and follow-up question trees.
+
+**Competency framework**: See `references/pm-competency-framework.md` for the PM and Business Operator competency map used in gap analysis.
+
 ### State Update Triggers
 
 Write to `coaching_state.md` whenever:
@@ -405,19 +433,20 @@ Execute commands immediately when detected. Before executing, **read the referen
 
 When executing a command, read the required reference files first:
 
-- **All commands**: Read `references/commands/[command].md` for that command's workflow, and `references/cross-cutting.md` for shared modules (differentiation, gap-handling, signal-reading, psychological readiness, cultural awareness, cross-command dependencies).
+- **All commands**: Read `references/commands/[command].md` for that command's workflow, and `references/cross-cutting.md` for shared modules (differentiation, gap-handling, signal-reading, psychological readiness, cultural awareness, cross-command dependencies). Also reference the Default Candidate Context (above) for profile-aware coaching.
 - **`analyze`**: Also read `references/transcript-processing.md`, `references/transcript-formats.md`, `references/rubrics-detailed.md`, `references/examples.md`, `references/calibration-engine.md`, and `references/differentiation.md` (when Differentiation is the bottleneck).
 - **`practice`**, **`mock`**: Also read `references/role-drills.md`. For `practice role` and other role-specific drills, also read `references/calibration-engine.md` Section 5 (role-drill score mapping). For `mock`, also read `references/calibration-engine.md` (mock produces scores and benefits from calibration guidance).
-- **`prep`**: Also read `references/story-mapping-engine.md` when storybank exists.
+- **`prep`**: Also read `references/story-mapping-engine.md` when storybank exists. Also read `references/pm-competency-framework.md` for competency-based question prediction.
 - **`linkedin`**: Also read `references/differentiation.md` (for earned secret integration into profile), `references/storybank-guide.md` (for storybank data to feed into About/Experience rewrites).
 - **`resume`**: Also read `references/differentiation.md` (for earned secret integration into summary and bullets), `references/storybank-guide.md` (for storybank data to feed into bullet rewrites and quantification).
 - **`pitch`**: Also read `references/differentiation.md` (for earned secret integration into positioning), `references/storybank-guide.md` (for narrative identity themes and story data to anchor the statement).
 - **`outreach`**: Also read `references/differentiation.md` (for earned secret integration into message hooks), `references/storybank-guide.md` (for story selection to build credibility in messages).
-- **`decode`**: Also read `references/cross-cutting.md` Role-Fit Assessment Module (for fit assessment adaptation from JD-only input).
+- **`decode`**: Also read `references/cross-cutting.md` Role-Fit Assessment Module (for fit assessment adaptation from JD-only input). Also read `references/pm-competency-framework.md` for competency mapping.
 - **`present`**: Also read `references/storybank-guide.md` (for supporting stories to incorporate into presentations), `references/commands/prep.md` Section "Interview Format Taxonomy" (for format context when presentation is a known interview round format).
 - **`salary`**: Also read `references/commands/negotiate.md` (for handoff awareness and consistency — salary covers pre-offer, negotiate covers post-offer).
-- **`stories`**: Also read `references/storybank-guide.md` and `references/differentiation.md`.
+- **`stories`**: Also read `references/storybank-guide.md`, `references/differentiation.md`, and `references/story-seeds.md` (for pre-mapped story seeds from the candidate's resume). Also read `references/pm-competency-framework.md` for gap analysis against PM/BizOps competencies.
 - **`progress`**: Also read `references/calibration-engine.md`.
+- **`kickoff`**: Also read `references/story-seeds.md` (to pre-seed story seeds in Profile Snapshot) and `references/pm-competency-framework.md` (for competency-aware coaching plan).
 - **All commands at Directness Level 5**: Also read `references/challenge-protocol.md`.
 
 ## Evidence Sourcing Standard

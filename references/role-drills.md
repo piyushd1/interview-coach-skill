@@ -1,6 +1,6 @@
 # Role-Specific Drills
 
-These drills simulate the scrutiny candidates face from specialists in their field. Run weekly, not just before interviews.
+These drills simulate the scrutiny candidates face from interviewers evaluating Product Management, Business Operations, Strategy, and General Management roles. Run weekly, not just before interviews.
 
 ---
 
@@ -58,252 +58,113 @@ These drills simulate the scrutiny candidates face from specialists in their fie
 
 ---
 
-## Software Engineer: Technical Depth Test
+## Business Operator / P&L Leader: Systems & Scale Test
 
-**Setup**: Candidate describes a technical project or system they built.
-
-**Challenge across dimensions:**
-
-### Architecture
-- "Draw the system architecture. Where are the bottlenecks?"
-- "What happens at 10x scale? 100x?"
-- "What would you redesign if starting over?"
-- "Where did you take shortcuts? What's the tech debt?"
-
-### Trade-offs
-- "Why this stack over alternatives?"
-- "What did you optimize for? What did you sacrifice?"
-- "How did you balance speed vs. quality?"
-- "What's the maintenance burden of this approach?"
-
-### Debugging
-- "Walk me through the hardest bug you encountered."
-- "How did you identify the root cause?"
-- "What monitoring would have caught this earlier?"
-- "How do you know it's actually fixed?"
-
-### Collaboration
-- "How did you handle disagreements on technical approach?"
-- "How did you communicate technical constraints to non-engineers?"
-- "What did you learn from code review feedback?"
-- "How did you onboard others to this codebase?"
-
-### Edge Cases
-- "What happens when [component] fails?"
-- "How do you handle [unusual input]?"
-- "What's your rollback strategy?"
-- "What security considerations did you address?"
-
-**Scoring per response:**
-- Technical accuracy: 1-5
-- Depth of understanding (not just surface): 1-5
-- Awareness of trade-offs and alternatives: 1-5
-
----
-
-## Designer: Critique and Rationale Test
-
-**Setup**: Candidate presents a design project (ideally with visuals, but verbal walkthrough works).
+**Setup**: Candidate describes a business, P&L, or operational initiative they owned end-to-end.
 
 **Challenge across dimensions:**
 
-### Research Foundation
-- "What research informed this direction?"
-- "How many users did you talk to? What surprised you?"
-- "What did the data say that contradicted your intuition?"
-- "How did you validate this solved the actual problem?"
+### 1. P&L Ownership Lens
+- "Walk me through the P&L for this business. What were your revenue drivers? Cost structure?"
+- "What was the unit economics at launch vs. at scale? What changed?"
+- "You say you 'owned' this P&L — what decisions did you actually have authority to make vs. influence?"
+- "What trade-off did you make between growth and profitability? Why?"
+- "If the board asked you why this business deserves continued investment, what's your 60-second pitch?"
+- "How did you forecast demand? What assumptions were wrong?"
 
-### Design Rationale
-- "Why this layout over alternatives?"
-- "Walk me through your information hierarchy decisions."
-- "What did you try that didn't work?"
-- "How did you balance aesthetics vs. usability?"
+### 2. Scaling & Operations Lens
+- "This worked at small scale. What broke when you scaled?"
+- "What bottleneck did you foresee? What surprised you?"
+- "How did you decide when to systematize vs. keep things manual?"
+- "Walk me through your phased rollout strategy."
+- "What operational metrics were you watching daily? Weekly?"
+- "Where did you over-invest in process? Under-invest?"
 
-### Constraints
-- "What technical constraints shaped the design?"
-- "How did you work within brand guidelines?"
-- "What did you fight for that got cut?"
-- "How did you handle stakeholder feedback you disagreed with?"
-
-### Accessibility & Edge Cases
-- "How does this work for users with [disability]?"
-- "What happens on mobile? Slow connections?"
-- "How does this scale with 10x content?"
-- "What's the empty state? Error state?"
-
-### Impact
-- "How did you measure design success?"
-- "What behavioral change did you observe?"
-- "What would you improve in V2?"
-- "How did this affect key metrics?"
-
-**Scoring per response:**
-- User-centeredness (vs. assumption-driven): 1-5
-- Rationale clarity (can explain "why"): 1-5
-- Openness to critique (vs. defensive): 1-5
-
----
-
-## Data Scientist: Methodology Rigor Test
-
-**Setup**: Candidate describes an analysis, model, or data project.
-
-**Challenge across dimensions:**
-
-### Problem Framing
-- "How did you define the problem? Who defined success?"
-- "What was the business question behind the technical question?"
-- "What would 'wrong' look like? How would you know?"
-
-### Data Quality
-- "Where did the data come from? What's missing?"
-- "How did you handle missing values? Outliers?"
-- "What biases exist in this dataset?"
-- "How representative is your sample?"
-
-### Methodology
-- "Why this approach over alternatives?"
-- "What assumptions does this method require?"
-- "How did you validate those assumptions?"
-- "Walk me through your feature engineering decisions."
-
-### Evaluation
-- "What metrics did you optimize for? Why those?"
-- "How did you prevent overfitting?"
-- "What's your confidence interval? Statistical significance?"
-- "How did you validate in production vs. test?"
-
-### Communication
-- "How did you explain this to non-technical stakeholders?"
-- "What pushback did you get? How did you address it?"
-- "What did you simplify for the audience? What did you lose?"
-
-**Scoring per response:**
-- Statistical rigor: 1-5
-- Awareness of limitations: 1-5
-- Business translation (not just technical): 1-5
-
----
-
-## UX Researcher: Evidence and Influence Test
-
-**Setup**: Candidate describes a research project and its impact.
-
-**Challenge across dimensions:**
-
-### Study Design
-- "Why this method over alternatives?"
-- "What's your sample size? How did you recruit?"
-- "What biases might affect your findings?"
-- "How did you ensure you weren't leading participants?"
-
-### Analysis
-- "How did you synthesize across participants?"
-- "What patterns emerged? What outliers did you see?"
-- "How did you distinguish signal from noise?"
-- "What surprised you vs. confirmed expectations?"
-
-### Insight Quality
-- "What's the 'so what' of this finding?"
-- "How actionable is this insight?"
-- "What does this NOT tell us?"
-- "How confident are you? What would change your mind?"
-
-### Influence
-- "How did you get stakeholders to act on this?"
-- "Who disagreed? How did you handle it?"
-- "What research did NOT lead to change? Why?"
-- "How did you prioritize which findings to push?"
-
-### Ethics
-- "How did you handle sensitive participant data?"
-- "What consent did participants give?"
-- "Were there findings you chose not to share? Why?"
-
-**Scoring per response:**
-- Methodological soundness: 1-5
-- Insight actionability: 1-5
-- Stakeholder influence: 1-5
-
----
-
-## Operations / Business Ops: Systems Thinking Test
-
-**Setup**: Candidate describes a process, system, or operational improvement they led.
-
-**Challenge across dimensions:**
-
-### Problem Diagnosis
+### 3. Problem Diagnosis Lens
 - "How did you identify this was the right problem to solve?"
 - "What was the root cause vs. symptoms?"
 - "What data told you this was worth fixing?"
 - "What was the cost of doing nothing?"
+- "What other hypotheses did you consider and discard?"
 
-### Solution Design
-- "What alternatives did you consider?"
-- "Why this approach over others?"
-- "What dependencies did you uncover?"
-- "How did you handle edge cases?"
+### 4. Go-to-Market & Growth Lens
+- "How did you acquire your first 100 customers/users?"
+- "Walk me through the GTM strategy. What channels? What was the CAC?"
+- "What was your pricing strategy? How did you arrive at it?"
+- "What growth loops did you create? Which ones stalled and why?"
+- "How did you balance new user acquisition vs. retention?"
 
-### Implementation
-- "How did you roll this out? Phased or all at once?"
-- "What resistance did you encounter?"
-- "How did you get buy-in from stakeholders?"
-- "What broke during implementation?"
+### 5. Stakeholder & Change Management Lens
+- "Who was the hardest stakeholder to convince? What worked?"
+- "What resistance did you encounter from the existing team/org?"
+- "How did you get buy-in for a bet that didn't have proven ROI?"
+- "How did you communicate the vision to different audiences — engineers, leadership, frontline staff?"
+- "Tell me about a stakeholder you failed to convince. What happened?"
 
-### Measurement
-- "How did you measure success?"
-- "What leading vs. lagging indicators did you track?"
-- "How did you isolate impact from other changes?"
-- "What didn't improve that you expected to?"
-
-### Sustainability
+### 6. Sustainability & Impact Lens
 - "How did you ensure this stuck after you moved on?"
 - "What documentation/training did you create?"
-- "Who owns this now?"
+- "Who owns this now? How did you set up the handover?"
 - "What maintenance burden did you create?"
+- "How did you measure success? What leading vs. lagging indicators did you track?"
+- "How did you isolate impact from other changes happening simultaneously?"
 
 **Scoring per response:**
-- Systems thinking (sees connections): 1-5
-- Change management awareness: 1-5
-- Measurement rigor: 1-5
+- Systems thinking (sees connections, second-order effects): 1-5
+- P&L fluency (talks about the business, not just the product): 1-5
+- Change management awareness (people, org, incentives): 1-5
+- Measurement rigor (leading/lagging, attribution, calibration): 1-5
 
 ---
 
-## Marketing: Strategy and Attribution Test
+## Strategy & General Management: Strategic Thinking Test
 
-**Setup**: Candidate describes a campaign, launch, or marketing initiative.
+**Setup**: Candidate describes a strategic decision — market entry, business pivot, portfolio allocation, org restructure, or partnership/M&A decision.
 
 **Challenge across dimensions:**
 
-### Strategy
-- "Why this channel/approach over alternatives?"
-- "Who was the target audience? How did you define them?"
-- "What was the competitive context?"
-- "How did this fit into the broader marketing strategy?"
+### 1. Market & Competitive Lens
+- "What was your framework for evaluating this market? What did it miss?"
+- "What was the competitive landscape and why did you believe you could win?"
+- "What's your moat? How durable is it — really?"
+- "If a well-funded competitor entered tomorrow, what would you do?"
+- "What market signals were you tracking? Which ones changed your approach?"
+- "Walk me through a 'no-go' decision. When did you choose NOT to enter a market?"
 
-### Execution
-- "Walk me through the timeline and key decisions."
-- "What did you have to cut or change mid-flight?"
-- "How did you work with creative/product/sales?"
-- "What was your budget? How did you allocate it?"
+### 2. Resource Allocation Lens
+- "You had limited resources — how did you decide where to invest?"
+- "What did you say 'no' to? What was the opportunity cost?"
+- "Walk me through how you allocated budget/people across bets."
+- "How did you handle the tension between short-term revenue and long-term strategy?"
+- "What was your framework for killing underperforming bets?"
 
-### Attribution
-- "How did you measure impact?"
-- "What was your attribution model? What are its flaws?"
-- "How did you separate this campaign's impact from other factors?"
-- "What metrics didn't move that you expected to?"
+### 3. Org Design & Team Building Lens
+- "You built a team from scratch — walk me through your hiring philosophy."
+- "How did you structure pods/teams? What failed and what worked?"
+- "How did you set OKRs that actually drove behavior?"
+- "How did you handle the transition from doing to managing?"
+- "Tell me about someone you hired who didn't work out. What did you miss?"
+- "How did you build a culture that sustained when you weren't in the room?"
 
-### Learning
-- "What would you do differently?"
-- "What did you learn about the audience?"
-- "How did this inform future campaigns?"
-- "What surprised you about performance?"
+### 4. Executive Communication Lens
+- "You influenced C-suite to invest in this. Walk me through that conversation."
+- "How did you present the case to the board/leadership? What format? What data?"
+- "What pushback did you get from leadership? How did you handle it?"
+- "How did you translate technical/product strategy into business language for execs?"
+- "What did you leave out of the exec presentation, and why?"
+
+### 5. Pattern Recognition Lens
+- "What have you learned across multiple businesses/products that most operators haven't?"
+- "What patterns do you see that others miss?"
+- "What conventional wisdom in your domain do you disagree with? Why?"
+- "How do you decide when to apply a proven playbook vs. rethink from scratch?"
+- "What's the biggest mistake you see operators repeatedly make?"
 
 **Scoring per response:**
-- Strategic clarity: 1-5
-- Measurement sophistication: 1-5
-- Learning orientation: 1-5
+- Strategic clarity (can articulate the WHY behind choices): 1-5
+- Framework quality (structured thinking, not ad-hoc): 1-5
+- First-principles reasoning (challenges assumptions vs. follows playbooks): 1-5
+- Executive presence (communicates with C-suite clarity and confidence): 1-5
 
 ---
 
@@ -319,7 +180,9 @@ See `references/commands/practice.md` for the `practice technical` menu entry an
 
 - "Your team needs to decide between building a feature in-house or using a third-party service. Walk me through how you'd think about this decision."
 - "You've been asked to reduce page load time by 50%. Where do you start, and how do you decide what to prioritize?"
-- "Your team is debating whether to migrate to a new framework. Walk me through how you'd evaluate the decision."
+- "Your marketplace has a 20% cancellation rate. Walk me through how you'd diagnose and solve this."
+- "You need to design an LLM-powered feature for your product. Walk me through how you'd scope this, what risks you'd flag, and how you'd measure success."
+- "Your CEO wants you to launch in a new city in 3 weeks. Walk me through your decision framework."
 
 Adapt the scenario to the candidate's role and target company if available (from `coaching_state.md`).
 
@@ -346,22 +209,22 @@ Adapt the scenario to the candidate's role and target company if available (from
 
 ### Clarification-Seeking Drill
 
-**Setup**: Present an intentionally ambiguous prompt with no additional context. The goal is to evaluate whether the candidate scopes the problem before solving — a critical skill in system design interviews that most candidates skip.
+**Setup**: Present an intentionally ambiguous prompt with no additional context. The goal is to evaluate whether the candidate scopes the problem before solving — a critical skill in case study and system design interviews that most candidates skip.
 
 Examples:
 
-- "Design a notification system."
-- "Build a recommendation engine."
-- "Create a dashboard for the operations team."
-- "Improve the checkout flow."
+- "Improve the vendor onboarding process."
+- "Launch a new revenue stream for the platform."
+- "Reduce churn by 50%."
+- "Build a recommendation engine for the marketplace."
 
 Give NO additional context. Wait silently. Evaluate what they do next.
 
 **What to evaluate:**
 
 - Did they ask clarifying questions before starting to solve? (most candidates don't — they jump straight in)
-- Quality of questions: scoping questions ("Who are the users? What scale?") vs. trivial questions ("What programming language?")
-- Did they state assumptions explicitly when they couldn't get answers? ("I'll assume we're talking about web and mobile, at the scale of about 10M users — let me know if that's wrong.")
+- Quality of questions: scoping questions ("Who are the users? What's the current churn rate? What segments?") vs. trivial questions ("What tools do we use?")
+- Did they state assumptions explicitly when they couldn't get answers? ("I'll assume we're talking about B2B customers with annual contracts — let me know if that's wrong.")
 - Comfort with ambiguity: did they proceed productively, or freeze waiting for certainty?
 
 **Challenge dimensions:**
@@ -379,32 +242,32 @@ Give NO additional context. Wait silently. Evaluate what they do next.
 
 ### Mode-Switching Drill
 
-**Setup**: This drill targets candidates preparing for technical+behavioral mix interviews. Start with a behavioral question about a technical decision, then pivot to technical discussion mid-answer, then pivot back to behavioral.
+**Setup**: This drill targets candidates preparing for mixed-format interviews where interviewers shift between business, product, and technical questions. Start with a business question, then pivot to product thinking, then to technical.
 
 Example sequence:
 
-1. Start behavioral: "Tell me about a time you had to make a difficult technical tradeoff."
-2. Mid-answer, pivot to technical: "Interesting — walk me through the technical approach you chose. What were the alternatives and why did you pick this one?"
-3. Pivot back to behavioral: "How did the team respond to that decision? Was there disagreement?"
-4. Pivot to forward-looking technical: "If you faced a similar problem today with different constraints, how would your approach change?"
+1. Start business: "Tell me about a time you had to make a difficult P&L trade-off."
+2. Mid-answer, pivot to product: "Interesting — how did you decide what to build to address that problem? Walk me through the product approach."
+3. Pivot to technical: "What was the technical architecture behind that? What trade-offs did the engineering team make?"
+4. Pivot back to strategy: "If you had to do it again at a company 10x the size, what would change?"
 
 **What to evaluate:**
 
-- Speed of register shift: does the candidate switch fluidly, or fumble transitions?
-- Depth maintenance: do they maintain technical depth when in behavioral mode and behavioral warmth when in technical mode?
-- Integration: do the modes reinforce each other, or feel like two different candidates?
+- Speed of register shift: does the candidate switch fluidly between business/product/technical modes?
+- Depth maintenance: do they maintain business depth when in product mode and technical credibility when in business mode?
+- Integration: do the modes reinforce each other, or feel like three different candidates?
 - Energy consistency: does one mode visibly drain them more than the other?
 
 **Challenge dimensions:**
 
 - Rapid pivots: switch mode 3 times in 5 minutes without signposting
-- "You sound like a different person when you talk about the technical side. How do you bring that same energy to the people side?" (meta-feedback that reveals mode-switching patterns)
-- "That story was great, but I still don't understand the technical decision. Walk me through it like I'm an engineer on your team." (tests whether behavioral warmth comes at the cost of technical rigor)
+- "You sound like a different person when you talk about the technical side. How do you bring that same confidence to the business questions?" (meta-feedback that reveals mode-switching patterns)
+- "That strategy was great, but I still don't understand the unit economics. Walk me through it like you're presenting to the board." (tests whether strategic thinking comes at the cost of financial rigor)
 
 **Scoring per response:**
 
 - Mode-switching fluidity (seamless vs. fumbled): 1-5
-- Register appropriateness (depth in both modes): 1-5
+- Register appropriateness (depth in all three modes): 1-5
 - Integration (modes reinforce each other vs. disconnected): 1-5
 
 ### Tradeoff Articulation Drill
@@ -415,8 +278,10 @@ Examples:
 
 - "You can ship in 2 weeks with known technical debt, or in 6 weeks with a clean architecture. Walk me through your decision process."
 - "You have budget for either a senior hire or two junior hires. What do you choose and why?"
-- "Your team can build a feature that 80% of users want a little, or a feature that 20% of users want desperately. Which do you build?"
-- "You can optimize for latency or for cost. The business says both matter equally. How do you decide?"
+- "Your marketplace can optimize for supply quality or supply quantity. Which do you invest in first?"
+- "You can optimize for growth or profitability this quarter. The board says both matter. How do you decide?"
+- "You can invest in a new city launch (high CAC, uncertain demand) or deepen in existing cities (lower risk, slower growth). What do you choose?"
+- "Your LLM feature will cost $200K/month in API calls. The free version attracts users but the ROI is unclear. Do you keep it?"
 
 Adapt examples to the candidate's role and domain.
 
@@ -430,7 +295,7 @@ Adapt examples to the candidate's role and domain.
 
 **Challenge dimensions:**
 
-- "Your manager wants the 2-week version. Your tech lead wants the 6-week version. What do you do?" (adds stakeholder complexity)
+- "Your CEO wants the growth version. Your CFO wants profitability. What do you do?" (adds stakeholder complexity)
 - "A year later, the technical debt is causing production incidents. How do you think about your original decision?" (tests intellectual honesty and hindsight reasoning)
 - "What information would change your answer?" (tests decision framework quality — do they know what would flip their conclusion?)
 - "I would have made the opposite choice. Convince me." (tests ability to defend a position under direct challenge without getting defensive)
@@ -443,16 +308,73 @@ Adapt examples to the candidate's role and domain.
 
 ### Role Adaptations for Technical Communication Drills
 
-The drills above are role-agnostic, but the scenarios should be adapted to each candidate's domain:
+The drills above are role-agnostic, but the scenarios should be adapted to each candidate's target:
 
-- **Software Engineer**: Use architecture, infrastructure, and system design scenarios. Thinking Out Loud → "design a [system]" prompts. Clarification-Seeking → "build a service that handles [ambiguous requirement]."
-- **Product Manager**: Use prioritization, roadmap, and resource allocation scenarios. Tradeoff Articulation maps directly to roadmap decisions. Clarification-Seeking → "improve [product area]."
-- **Data Scientist**: Use methodology, model selection, and experiment design scenarios. Thinking Out Loud → "how would you measure [ambiguous metric]?" Clarification-Seeking → "build a model to predict [X]."
-- **Designer**: Use design system, UX architecture, and design critique scenarios. Thinking Out Loud → "redesign [flow]." Tradeoff Articulation → "user delight vs. development cost."
-- **Operations / Business Ops**: Use process design, tool selection, and systems improvement scenarios. Tradeoff Articulation → "build vs. buy" and "automate vs. manual" decisions.
-- **Marketing**: Use campaign strategy, channel allocation, and measurement scenarios. Tradeoff Articulation → "brand awareness vs. direct response" and "broad reach vs. targeted conversion."
+- **Product Manager**: Use prioritization, roadmap, and resource allocation scenarios. Tradeoff Articulation maps directly to roadmap decisions. Clarification-Seeking → "improve [product area]." Thinking Out Loud → "how would you approach building [product feature] for [user segment]?"
+- **Business Operator / P&L Leader**: Use process design, tool selection, market entry, and systems improvement scenarios. Tradeoff Articulation → "build vs. buy", "growth vs. profitability", "new market vs. deepen existing". Thinking Out Loud → "how would you diagnose [business problem]?"
+- **Strategy / General Management**: Use portfolio allocation, competitive positioning, M&A evaluation, and org restructure scenarios. Tradeoff Articulation → "invest in X vs. Y initiative". Clarification-Seeking → "evaluate this acquisition target."
 
 Pull from the candidate's target companies and roles (from `coaching_state.md`) to make scenarios specific. Generic scenarios build the skill; role-specific scenarios build confidence.
+
+---
+
+## Case Study & Business Review Drills
+
+These drills prepare candidates for case-study-style interviews and business review presentations common in PM, strategy, and GM roles at tech companies.
+
+### Product Case Study Drill
+
+**Setup**: Present a product challenge that requires structured thinking. The candidate must diagnose, prioritize, and propose a solution within a time constraint.
+
+Example prompts:
+
+- "Instagram engagement is dropping 5% month-over-month among 18-24 year olds. How would you diagnose and address this?"
+- "You're the PM for a marketplace. Cancellation rates are 20%. Walk me through your approach."
+- "You're launching a new vertical in your marketplace. How do you decide which vertical and how do you validate demand?"
+- "Your platform's NPS dropped from +28 to +12 in one quarter. What do you do?"
+- "You need to decide whether to build an AI feature that costs $200K/month to run. How do you evaluate it?"
+
+**What to evaluate:**
+
+- Did they structure the problem before solving? (framework, not random ideas)
+- Did they identify the right metrics and user segments?
+- Did they prioritize root causes vs. symptoms?
+- Did they propose solutions tied to the diagnosis, not generic best practices?
+- Did they discuss tradeoffs and success metrics for their solution?
+
+**Scoring per response:**
+
+- Problem structuring (MECE framework, not stream of consciousness): 1-5
+- Diagnostic rigor (root cause, not symptoms): 1-5
+- Solution quality (specific, feasible, tied to diagnosis): 1-5
+- Business judgment (considers cost, risk, opportunity cost): 1-5
+
+### Business Review / P&L Walkthrough Drill
+
+**Setup**: Candidate walks through a business they owned as if presenting to the board or a hiring committee. They should cover: market context, strategy, key metrics, results, and what they'd do differently.
+
+**What to evaluate:**
+
+- Can they tell the story of a business, not just a product?
+- Do they speak in P&L terms (revenue, costs, margins, unit economics)?
+- Do they show strategic judgment (why this approach vs. alternatives)?
+- Do they demonstrate learning (what failed, what surprised them)?
+- Can they handle the "why" behind every number?
+
+**Challenge dimensions:**
+
+- "Your revenue growth looks strong, but what's happening to margins?" (financial depth)
+- "You're claiming causation from correlation. How do you know YOUR initiative drove this?" (attribution rigor)
+- "What was happening in the market that could explain this growth independently?" (external factors)
+- "If I gave you 2x the budget, where would you invest? If I cut your budget by 50%?" (resource allocation under constraint)
+- "What would you NOT do again?" (intellectual honesty)
+
+**Scoring per response:**
+
+- P&L fluency (revenue, cost, margin, unit economics language): 1-5
+- Strategic coherence (choices tie to a thesis): 1-5
+- Attribution rigor (distinguishes personal impact from market forces): 1-5
+- Executive communication (clear, concise, conclusion-first): 1-5
 
 ---
 
@@ -521,7 +443,7 @@ This drill simulates the worst-case version of an interview — multiple stresso
 ### Setup
 
 1. **Pull the candidate's weakest patterns** from `coaching_state.md` — Active Coaching Strategy, Score History, and Revisit Queue. The stress drill should target known vulnerabilities, not random pressure.
-2. **Select the role-specific drill** that matches their target (PM Six-Lens, Engineer Technical Depth, etc.). The stress drill layers pressure *on top of* the role-specific content.
+2. **Select the role-specific drill** that matches their target (PM Six-Lens, Business Operator Systems & Scale, or Strategy & GM). The stress drill layers pressure *on top of* the role-specific content.
 3. **Set the frame**: "This is the hardest drill I'll throw at you. It's designed to break your composure so we can see what happens when things go sideways. Don't try to be perfect — try to recover."
 
 ### Stress Layers (apply 3-4 simultaneously)
@@ -530,7 +452,7 @@ This drill simulates the worst-case version of an interview — multiple stresso
 |---|---|---|
 | **Time compression** | "You have 60 seconds for this answer." Apply to questions that normally take 2-3 minutes. | Prioritization under pressure — can they find the headline fast? |
 | **Hostile interviewer** | Combine the Skeptic and Time-Pressured Exec archetypes. Interrupt early, challenge every claim, show impatience. | Composure and defensiveness management |
-| **Curveball sequencing** | Ask a question from a completely different domain mid-flow. Go from behavioral to "What's your biggest weakness?" to technical without transition. | Cognitive flexibility and recovery speed |
+| **Curveball sequencing** | Ask a question from a completely different domain mid-flow. Go from behavioral to "What's your biggest weakness?" to a case study without transition. | Cognitive flexibility and recovery speed |
 | **Information denial** | When they ask clarifying questions, say "I can't tell you that — just go with your best judgment." Repeatedly. | Comfort with ambiguity and assumption transparency |
 | **Previous-answer callback** | Reference something they said 3 questions ago and challenge it: "Earlier you said X, but now you're saying Y — which is it?" | Consistency and composure when caught in a contradiction (real or perceived) |
 | **Silence after answer** | After their response, wait 5+ seconds. Say nothing. Then: "Is that your final answer, or do you want to add anything?" | Resistance to panic-filling silence |
@@ -554,12 +476,9 @@ This drill simulates the worst-case version of an interview — multiple stresso
 
 ### Role-Specific Stress Variants
 
-- **PM**: Layer Business Lens + Skeptic Lens challenges simultaneously. Add a "the CEO just asked about this in the hallway" urgency framing.
-- **Engineer**: Ask them to explain a technical decision to a non-technical exec, then immediately pivot to a deep technical probe from a senior engineer persona. Test register-switching under time pressure.
-- **Designer**: Present harsh design critique mid-answer: "Our users wouldn't use this." Test whether they get defensive or curious.
-- **Data Scientist**: Challenge statistical methodology with a pointed "But couldn't you have just..." question that proposes a simpler approach. Test whether they defend rigor without being dismissive.
-- **Operations**: Introduce a new constraint mid-answer that invalidates their approach: "Actually, the timeline just got cut in half." Test real-time re-planning.
-- **Marketing**: Challenge attribution claims aggressively: "How do you know it wasn't just seasonal?" Layer with "And the budget for this was how much?"
+- **PM**: Layer Business Lens + Skeptic Lens challenges simultaneously. Add a "the CEO just asked about this in the hallway" urgency framing. Throw a "walk me through the unit economics" in the middle of a behavioral answer.
+- **Business Operator / P&L Leader**: Introduce a new constraint mid-answer that invalidates their approach: "Actually, your budget just got cut by 60%." or "Your top performer just resigned. Now what?" Test real-time re-planning and composure.
+- **Strategy / GM**: Challenge strategic assumptions mid-answer: "We just learned a competitor is launching the same product next month at half the price." Test whether they can adapt their strategic thesis under pressure without abandoning structure.
 
 ---
 
@@ -577,17 +496,9 @@ Within each role drill, questions range from entry-level to advanced. Use this g
 
 **PM Six-Lens**: Engineering and Data lenses are typically hardest for PMs — deploy those later. Business Lens questions escalate from "How'd this impact revenue?" (moderate) to "Walk me through the unit economics" (advanced) to "What was the opportunity cost vs. the next best project?" (expert).
 
-**Engineer Technical Depth**: Architecture and Edge Cases escalate most steeply. "What happens at 10x scale?" (moderate) → "What happens at 100x with half the infrastructure budget?" (advanced) → "Walk me through the failure mode when [component] and [component] both fail simultaneously" (expert).
+**Business Operator / P&L Leader Systems & Scale**: Problem Diagnosis is the warmup. P&L Ownership and Sustainability escalate from "How did you measure success?" (moderate) to "How did you isolate your impact from other changes happening simultaneously?" (advanced) to "The business you built works, but it's dependent on 3 people. What happens when they leave, and what should you have done differently?" (expert).
 
-**Designer Critique**: Research Foundation questions are the warmup. Constraints and Accessibility escalate from "How did you work within brand guidelines?" (moderate) to "The engineering team says this is impossible to build. What do you do?" (advanced).
-
-**Data Scientist Methodology**: Problem Framing is the warmup. Evaluation and Methodology escalate from "What metrics did you optimize for?" (moderate) to "How did you prevent overfitting given your sample size?" (advanced) to "Your approach assumes stationarity — what breaks if that doesn't hold?" (expert).
-
-**UX Researcher Evidence and Influence**: Study Design questions are the warmup. Influence and Ethics escalate from "How did you get stakeholders to act on this?" (moderate) to "What research did NOT lead to change? Why not, and was that the right call?" (advanced) to "Your findings contradicted the VP's pet project. Walk me through exactly what happened." (expert).
-
-**Operations / Business Ops Systems Thinking**: Problem Diagnosis is the warmup. Sustainability and Measurement escalate from "How did you measure success?" (moderate) to "How did you isolate your impact from other changes happening simultaneously?" (advanced) to "The process you built works, but the person who maintained it just left. What happens now, and what should you have done differently?" (expert).
-
-**Marketing Strategy and Attribution**: Strategy questions are the warmup. Attribution and Learning escalate from "How did you measure impact?" (moderate) to "How did you separate this campaign's impact from seasonal effects, other campaigns running simultaneously, and organic growth?" (advanced) to "Your attribution model says this campaign drove $2M. Your CFO says it was $200K. Walk me through why you're both right." (expert).
+**Strategy & GM Strategic Thinking**: Market & Competitive is the warmup. Resource Allocation and Pattern Recognition escalate from "How did you decide where to invest?" (moderate) to "What framework do you use for killing underperforming bets, and when did it fail you?" (advanced) to "You claim this is a pattern — but the sample size is 3 companies. How do you distinguish signal from coincidence?" (expert).
 
 ---
 
@@ -606,9 +517,9 @@ Within each role drill, questions range from entry-level to advanced. Use this g
 6. **Debrief with coaching presence**: After each drill round:
    - Ask: "How did that feel? What would you change if you could do it again?"
    - Reflect back what you observed working well FIRST
-   - Share observations on gaps as questions when possible: "I noticed you didn't mention the data behind that decision — was that a deliberate choice, or did it slip?"
+   - Share observations on gaps as questions when possible: "I noticed you didn't mention the unit economics behind that decision — was that a deliberate choice, or did it slip?"
    - Close with: "What's one thing you want to try differently on the next round?"
 
-7. **Notice patterns across drills**: If someone consistently struggles with a particular challenge type (e.g., always gets defensive on skeptical pushback), name the pattern: "I'm seeing this come up again. What do you think is happening when you get that kind of question?"
+7. **Notice patterns across drills**: If someone consistently struggles with a particular challenge type (e.g., always gets defensive on P&L questions, or can't articulate unit economics under pressure), name the pattern: "I'm seeing this come up again. What do you think is happening when you get that kind of question?"
 
 8. **Celebrate growth within a session**: When they improve from round 1 to round 3, name it specifically: "Did you notice the difference there? Your answer on that last one was half the length and twice as clear. What changed?"

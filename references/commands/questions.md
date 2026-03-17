@@ -22,6 +22,37 @@ Adapt questions to where the candidate is in the interview loop:
 
 **Intelligence-informed question generation**: If Interview Intelligence → Effective Patterns exists with 3+ data points, use it to inform question style. If the candidate's best interviews correlated with asking "how" questions (probing team process), weight toward that style. If Company Patterns shows what this specific company values in candidate questions, calibrate accordingly.
 
+### PM/BizOps-Specific Question Frameworks
+
+When generating questions for PM, Business Operator, Strategy, or GM roles, draw from these frameworks organized by what the candidate wants to learn:
+
+**Product-Market Fit & Strategy questions** (show product thinking depth):
+- "I noticed [company] recently launched [feature/product]. How are you thinking about its fit within the broader product strategy?"
+- "What's the biggest bet the product team is making right now, and how will you know if it's working?"
+- "How does this team think about the build vs. buy decision for [relevant technology area]?"
+- "What does the product development process look like from idea to ship? Where does it break down?"
+
+**Unit Economics & Business Model questions** (show P&L thinking):
+- "How does this team think about unit economics? Is the focus on improving existing metrics or building new revenue streams?"
+- "What's the relationship between the product team and the commercial/revenue team? How are trade-offs made?"
+- "I'm curious about how pricing decisions get made here — is that product-led, sales-led, or finance-led?"
+
+**Growth & GTM questions** (show growth mindset):
+- "What's the primary growth lever right now — new user acquisition, retention, or expansion?"
+- "How does the team think about experimentation and A/B testing? What's the velocity and rigor?"
+- "What's the biggest growth constraint right now — product-market fit, distribution, or something else?"
+
+**Team & Leadership questions** (show management maturity):
+- "What does the PM career ladder look like here? How do you develop PMs?"
+- "How are product decisions made when there's genuine disagreement between product, eng, and design?"
+- "What's the team's biggest challenge right now that isn't commonly talked about?"
+- "How does [exec name] think about the product org's role in the company's strategy?"
+
+**Culture & Working Style questions** (show self-awareness):
+- "What separates the PMs who thrive here from those who struggle?"
+- "How does the team handle a quarter where the main bet doesn't work out?"
+- "What's one thing you wish every candidate knew about this role before accepting?"
+
 ### Questions To Avoid
 
 Flag these common mistakes:

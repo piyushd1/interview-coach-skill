@@ -10,8 +10,25 @@
    - Previous analyze results (patterns and weak dimensions)
    - The specific role/company (does the JD require something the candidate lacks?)
    - Career narrative gaps (transitions that need explaining)
+   - **Default Candidate Context** (from SKILL.md) for pre-identified likely concerns
    - **Outcome Log** (if real interview outcomes exist): Use past rejections as counter-evidence for current concerns. If the candidate was previously rejected for "not enough leadership experience" but has since advanced at two other companies on leadership questions, that outcome data weakens this concern. Conversely, if the same concern has driven 2+ rejections, it's confirmed — escalate its severity.
 4. Add any concerns the candidate missed.
+
+**PM/BizOps-Specific Concern Templates:**
+
+Prioritize these concerns when coaching for PM, Business Operator, Strategy, and GM roles:
+
+| Concern Category | Typical Trigger | Counter Strategy |
+|---|---|---|
+| **"Was this really P&L ownership?"** | Resume says "P&L owner" but interviewers suspect it was visibility, not authority | Be specific about decisions YOU made: pricing, headcount, budget allocation, kill decisions. Name what you could do without approval vs. what needed sign-off. |
+| **Marketplace experience transferability** | Heavy marketplace background, targeting non-marketplace role | Reframe marketplace skills as universal: supply-demand balancing = resource allocation, network effects = growth thinking, liquidity = market-making. Pull from specific transferable stories. |
+| **Technical credibility as a PM** | No engineering background, targeting technical PM or AI/ML PM role | Lead with technical product decisions you made (build vs. buy, architecture trade-offs, model selection). Show you can communicate with engineers as equals without claiming to BE an engineer. |
+| **India market experience relevance** | All experience in India, targeting global or US-market roles | Focus on problem complexity, scale, and decision frameworks — not geography. "I scaled a marketplace to X users in a market with Y unique constraints" is universally impressive. |
+| **Multiple transitions narrative** | 3+ companies in 5 years, or frequent moves | Each move needs a 1-sentence intentional narrative. "I went to UC for marketplace scale, then to JD for P&L ownership, then to [next] for [reason]." The through-line must be clear. |
+| **Domain breadth vs. depth** | Experience across many domains (marketplace, consumer, B2B) | Frame as pattern recognition: "I've seen what works across marketplace, consumer, and B2B contexts — and I can tell you what transfers and what doesn't." |
+| **C-suite influence vs. execution** | Heavy on strategy/influence stories, interviewer worried about execution chops | Balance every strategy story with execution detail: timelines, sprint mechanics, how you unblocked teams, what you shipped. |
+| **Team size / org scale** | Led 6 PMs, interviewer wonders about readiness for 20+ | Show org design thinking, hiring philosophy, management systems you built — not just headcount. "I designed the team for X, and here's what I'd change at 3x the scale." |
+
 5. **Rank by severity**: Not all concerns are equal. Assign each one:
    - **Dealbreaker**: This could single-handedly end the candidacy if not addressed well (e.g., missing a core required skill, a very short recent tenure that looks like termination)
    - **Significant**: Will come up and needs a strong counter, but won't kill the candidacy alone (e.g., no direct industry experience, a slightly junior background)

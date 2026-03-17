@@ -30,7 +30,7 @@ Strongly recommended:
 
 Don't just file the resume — analyze it for coaching-relevant signals:
 
-1. **Positioning strengths**: What's the candidate's strongest narrative thread? What would a hiring manager see in 30 seconds? Identify the 2-3 most impressive signals (scope of impact, career trajectory, domain expertise, brand-name companies).
+1. **Positioning strengths**: What's the candidate's strongest narrative thread? What would a hiring manager see in 30 seconds? Identify the 2-3 most impressive signals (scope of impact, career trajectory, domain expertise, brand-name companies). Reference Default Candidate Context in SKILL.md for pre-identified positioning strengths.
 2. **Likely concerns**: What will interviewers worry about? Look for:
    - Career gaps or short tenures (< 1 year)
    - Lateral moves or title regressions
@@ -38,10 +38,17 @@ Don't just file the resume — analyze it for coaching-relevant signals:
    - Seniority mismatches (targeting a level above or below recent roles)
    - Missing keywords that the target role requires
    - "Invisible" contributions — important work that doesn't translate to resume bullets
+   **PM/BizOps-specific concern triggers:**
+   - Marketplace-heavy experience — interviewer may question versatility beyond marketplace dynamics
+   - "Was this really P&L ownership?" — distinguish true decision authority from P&L visibility/reporting
+   - Technical depth as a PM — establishing credibility without overclaiming engineering skills
+   - India market experience — framing relevance for global or different-market roles
+   - Multiple company transitions — each move needs a crisp, intentional narrative
+   - B2B vs B2C experience gap — if targeting roles in the other domain
 3. **Career narrative gaps**: Where the story doesn't connect. "You went from engineering at [Company A] to product at [Company B] — that transition is a story you'll need to tell well. Do you have one ready?"
-4. **Story seeds**: Resume bullets that likely have rich stories behind them — flag these for storybank building. "This bullet about reducing churn by 40% — there's probably a strong story behind that. Let's capture it."
+4. **Story seeds**: Resume bullets that likely have rich stories behind them — flag these for storybank building. Reference `references/story-seeds.md` for 16 pre-mapped story seeds with STAR skeletons, round-type assignments, and follow-up question trees. "This bullet about reducing churn by 40% — there's probably a strong story behind that. Let's capture it."
 
-Feed these findings into the Kickoff Summary output (Profile Snapshot section) and into the initial coaching plan.
+Feed these findings into the Kickoff Summary output (Profile Snapshot section) and into the initial coaching plan. Use `references/pm-competency-framework.md` to inform the coaching plan — identify which competencies the candidate needs to prioritize based on their target role type.
 
 ### Step 2.55: Career Transition Detection
 
