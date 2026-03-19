@@ -1,5 +1,5 @@
 # Coaching State — Piyush Deveshwar
-Last updated: 2026-03-17
+Last updated: 2026-03-19
 
 ## Profile
 - Target role(s): Senior PM, Group PM, Staff PM, Principal PM, Business Head, Startup Operator
@@ -35,7 +35,7 @@ Last updated: 2026-03-17
 ## Storybank
 | ID | Title | Primary Skill | Secondary Skill | Earned Secret | Strength | Use Count | Last Used |
 |----|-------|---------------|-----------------|---------------|----------|-----------|-----------|
-| S001 | Zero-to-One P&L: JD Xperts to ₹4.8cr ARR | P&L Ownership / 0-to-1 Building | GTM Execution | seed only | TBD | 0 | — |
+| S001 | Zero-to-One P&L: JD Xperts to ₹4.8cr ARR | P&L Ownership / 0-to-1 Building | GTM Execution | full | 4.5/5 | 0 | — |
 | S002 | 5.4x Unit Economics Transformation | Unit Economics / Financial Acumen | Pricing Strategy | seed only | TBD | 0 | — |
 | S003 | Solving 11% Search Failure with LLM Engine | AI/ML Product Thinking / Technical PM | Cross-Functional Leadership | seed only | TBD | 0 | — |
 | S004 | Foreseeing the Bottleneck: Shared OMS Architecture | Platform Strategy / System Design | Influence Without Authority | seed only | TBD | 0 | — |
@@ -129,6 +129,38 @@ Grew app advertising revenue from ~₹65cr to ~₹78cr — a ₹13cr incremental
 **Earned Secret**
 "The insight wasn't new to the org — old hands knew half the app users were businesses. What was new was treating it as a product problem rather than a sales problem. When you remove the sales team as the intermediary, two things happen: cost-of-sale collapses, and the long tail becomes economically viable for the first time. That's not a growth hack — that's a structural shift in how the marketplace makes money. Amazon EMXO is building exactly this: self-serve capability for emerging market vendors who'd otherwise need a sales team to monetize."
 
+#### S001 — Zero-to-One P&L: JD Xperts to ₹4.8cr ARR
+- Primary Skill: P&L Ownership / 0-to-1 Building
+- Secondary Skill: GTM Execution, Marketplace Strategy
+- Strength: 4.5/5
+- Round Type: Business ★★★ | Product ★★ | Technical ★
+- Follow-up Readiness: High
+- Deploy for: P&L ownership, 0-to-1 building, "Ownership" LP, "Deliver Results" LP, "Tell me about a time you built something from scratch"
+- Version history: 2026-03-19 — first full version (rebuilt from lost session)
+
+**Situation**
+In 2020, Justdial's advertising revenues dropped suddenly. Leadership wanted to diversify beyond ad tech into extensions of their business that were similar and more direct to execute. They invested in service-based verticals. JD Xperts was a home services vertical — users had a clear use case: finding high-quality, trusted, verified vendors for home services. For the business, this meant diversifying revenues away from ad tech. For high-quality, high-agency vendors, this acted as a better marketing spend than traditional advertising.
+
+**Task**
+I was the first hire. I negotiated my role from a business lead to a product + business lead. I hired engineers, product managers, and operators for all other roles. I reported to the CPO. For the first phase — when we needed to prove the model, bring traffic, and serve users — we were part of the same org with no separate funding. I had to prove the model before earning dedicated investment.
+
+**Action**
+Three core decisions drove the outcome:
+
+1. **Model shift: handshake → completion.** In the traditional business, vendors bought listing positions on local search results pages or ad banners. When a user enquired, Justdial connected them to multiple vendors — some paid, some not. Revenue came from the connection event (~₹50/connection). In the new model, we charged the vendor a percentage commission on their billing. Since vendors didn't have to compete in this model and had more assured returns, they were happy to participate. With average ticket sizes of ₹1,100–1,200 per order, we achieved a blended revenue of ₹270 per order — 5.4x the legacy model.
+
+2. **Matchmaking algorithm — quality foundation.** The commission-on-completion model only works if matches are good. We built a matchmaking algorithm that cut cancellations from 20% to 3% and flipped NPS from -12 to +28. This was the quality foundation the commission model required — every bad match, every cancellation was now our economic problem too.
+
+3. **Shared OMS — scaling infrastructure.** I foresaw that each new category would need ~3 months to build standalone order management. Built abstracted, shared OMS infrastructure: new verticals could launch in 3 weeks instead of 3 months. This enabled 4 new business lines without proportional engineering investment.
+
+**Result**
+₹4.8cr ARR (~$580K) over ~2.5 years. 5.4x unit economics (₹270/order vs. ₹50 legacy). Proved the model to the exec team. OMS enabled 4 verticals at dramatically reduced launch time.
+
+**Earned Secret**
+"When you flip to commission-on-completion, every bad match, every cancellation, every poor NPS score becomes your problem economically. That alignment is what makes the product better. We didn't just build a new revenue line — we built a fundamentally different relationship between platform quality and platform revenue."
+
+---
+
 ## Score History
 ### Historical Summary
 [Empty]
@@ -175,13 +207,13 @@ Grew app advertising revenue from ~₹65cr to ~₹78cr — a ₹13cr incremental
 - Job ID: 3182350 | Location: Bengaluru, IND, KA
 - Team: Emerging Marketplaces Cross Org (EMXO), Prime/Lifecycle/XCM — covers 10 emerging countries (India, Brazil, Mexico, AU, SG, UAE, Egypt, SA, Turkey, South Africa)
 - Category: Product Management — Technical (T-bar applies)
-- Status: Screening round scheduled — 2 days out (~2026-03-20)
+- Status: Screening round TOMORROW (~2026-03-20)
 - Round formats:
   - Round 1: Behavioral screen, ~45min (format: recruiter or HM TBD). LP-focused. Format Discovery not yet run.
 - Stories used in this loop: none yet
 - Key JD competencies (priority order): (1) Technical Product Ownership / System Architecture for mobile growth stack, (2) Mobile Growth / AARRR, (3) Cross-functional stakeholder influence, (4) Emerging market customer insight, (5) Data-driven / experimentation
 - Prep brief generated: 2026-03-18
-- Next action: Finish S003, build S009 and S001 before screen. Prep "Why Amazon / Why this role" and Justdial gap narrative.
+- Next action: Practice delivering S001, S003, S009, opener, and "Why Amazon" out loud. Run LP drills. All stories built — delivery practice is the gap.
 
 ## Active Coaching Strategy
 - Primary bottleneck: Technical depth credibility — confirmed by Amazon feedback ("fit for Senior PM, not Senior PM-T"). Business/product bars are being cleared.
@@ -208,10 +240,27 @@ Grew app advertising revenue from ~₹65cr to ~₹78cr — a ₹13cr incremental
 ## Comp Strategy
 [Empty — run `salary` to populate]
 
+## Standing Narratives
+
+### Why I Left Justdial (30–45 seconds)
+"I'd been at Justdial for nearly 5 years — built JD Xperts from zero, then led the mobile product org. By late 2025 I'd accomplished what I came to do: proved the new business model, scaled the LLM search engine, built the PM org. Two things converged: a leadership transition was underway, and the role I wanted next — something more technically forward, closer to the AI and platform frontier — wasn't going to be created there. I decided this was the right moment to deliberately invest in being closer to where technology is moving. That's what has me here talking to Amazon."
+
+### Why Amazon / Why This Role (60–90 seconds)
+"The EMXO charter maps almost exactly to the problems I've been working on — mobile-first users, emerging market dynamics, self-serve vendor growth, long-tail monetization. At Justdial, I discovered that nearly half our app users were actually businesses. When we built self-serve monetization flows for them — removing the sales team as the intermediary — we unlocked ₹13cr in revenue in categories that were structurally unprofitable under a sales-led model. The insight was the same one Amazon is building on: in emerging markets, you can't scale a sales team to match the long tail. You need product-led self-serve. The EMXO mission is to make Amazon work for merchants and customers across 10 markets where the friction looks very different than North America. I've lived that friction — building products where Hinglish queries break your search engine, where trust signals matter more than price, where mobile is the only screen. That's not context I'd need to learn here. I'd be walking in with it."
+
+### Tell Me About Yourself (2-minute opener, calibrated for EMXO)
+"I'm Piyush — I've spent the last 6+ years building marketplace products in India, most recently as GPM at Justdial where I led a team of 6 PMs and 15+ cross-functional members.
+
+Three things define my work: First, I've built from zero. I took JD Xperts — a home services vertical — from concept to ₹4.8cr ARR with 5.4x unit economics. I was the first hire, built the team, proved the business model. Second, I've shipped AI at production scale. Our LLM-powered search engine cut search failures from 11% to 2%, rescuing 65,000 searches daily — handling Hinglish, misspellings, and free-text queries that rules-based systems couldn't touch. Third, I understand the emerging market merchant. I discovered that nearly half our app users were actually businesses, built self-serve monetization for them, and unlocked ₹13cr in revenue from categories that were structurally unprofitable under a sales-led model.
+
+That last insight — that in emerging markets, you need product-led self-serve because you can't scale a sales team to match the long tail — is exactly what EMXO is building. I've lived the friction this role is designed to solve: mobile-only users, trust-driven purchase decisions, multilingual search, and vendors who need simple self-serve tools to grow. That's the context I'd bring on day one."
+
 ## Session Log
 | Date | Commands | Key Outcomes | Next Action |
 |------|----------|--------------|-------------|
 | 2026-03-17 | kickoff | Full system setup. Profile loaded. 16 story seeds pre-mapped. Diagnostic question asked: where exactly is candidate failing in interviews? | `stories` — STAR-structure top 5 priority stories |
+| 2026-03-18 | stories | Built S003 (LLM Search) and S009 (Self-Serve Vendor Platform) full STAR stories. Fixed S003 metric (2%→3%). | Build S001, prep narratives |
+| 2026-03-19 | stories, narratives | Rebuilt S001 (JD Xperts P&L) full STAR. Added "Why I Left Justdial", "Why Amazon", and 2-min opener. Created LP revision cheatsheet. | Practice delivery out loud. LP drills. |
 
 ## Coaching Notes
 - 2026-03-17: Completed full Amazon loop. Rejected specifically for Senior PM-T (technical) — passed all business/product bars. Gap is technical depth credibility, not general interview performance. This is a targeted fix, not a full rebuild.
