@@ -117,15 +117,22 @@ That last insight — that in emerging markets, you need product-led self-serve 
 
 ---
 
-### S004 — Foreseeing the Bottleneck: Shared OMS Architecture ⚠️ SEED
-**LPs**: Invent and Simplify, Think Big, Are Right A Lot
-**Best for**: "Tell me about a time you simplified a complex problem" / technical depth / platform thinking
+### ★ S004 — Foreseeing the Bottleneck: Shared OMS Architecture
+**LPs**: Invent and Simplify, Think Big, Are Right A Lot, Have Backbone; Disagree and Commit
+**Best for**: "Tell me about a time you simplified a complex problem" / technical depth / platform thinking / "Tell me about a time you disagreed with stakeholders"
 
-- **Situation**: Multiple verticals building standalone order management systems. Each new category = ~3 months build time
-- **Task**: Foresaw scaling bottleneck. Advocated for shared, abstracted OMS
-- **Action**: Designed extensible architecture — shared core with customizable modules per vertical. Built the case to leadership using projected launch timelines vs. actual
-- **Result**: New verticals launch in 3 weeks (was 3 months). Enabled 4 new business lines. 65% reduction in new vertical launch time
-- *Needs detail: architecture specifics, stakeholder pushback, migration strategy*
+**Situation**: JD Xperts was built as a monolith — order placement, fulfillment, ratings, user management, all in one system. Meanwhile, Justdial was spinning up parallel product pods (doctors, insurance, laundry) as full-stack verticals. Each team was independently building practically the same infrastructure in silos — 4 teams duplicating order management, notifications, vendor management.
+
+**Task**: I noticed the problem while helping hire for other teams and sharing architectural decisions. My EM's bandwidth was getting stretched helping all teams with know-hows. I recognized that every future vertical would rebuild the same components — and advocated for shared microservices instead.
+
+**Action**:
+1. **Identified the shared core.** Mapped what was category-specific vs. reusable: user management, notification/comms layers, and vendor management (including availability) were nearly identical across verticals. Content management needed scope expansion. Matchmaking was configurable.
+2. **Built the case to the CPO.** Other team leads pushed back — they didn't want dependency on another team's infrastructure. I got the CPO on my side by showing how this would save months of duplicated effort per vertical and standardize processes for all future development.
+3. **Decomposed the monolith into microservices.** Each service exposed APIs — new verticals simply made calls. Example: availability was managed by a vendor management service; any new vertical could call it to find available vendors instead of rebuilding availability logic from scratch.
+
+**Result**: New vertical launch time dropped from ~3 months to ~3 weeks. Enabled 4 new business lines. Freed engineering bandwidth across the org. Standardized internal processes.
+
+**Earned Secret**: "The hardest part wasn't the architecture — it was the org politics. Team leads didn't want to depend on shared services they didn't control. The technical decision was obvious; the organizational decision required earning trust that shared infrastructure wouldn't become a bottleneck. I had to prove reliability before teams would voluntarily adopt."
 
 ---
 
@@ -141,15 +148,22 @@ That last insight — that in emerging markets, you need product-led self-serve 
 
 ---
 
-### S006 — Cancellations 20% → 3% / NPS -12 → +28 ⚠️ SEED
+### ★ S006 — Cancellations 20% → 3%, NPS -12 → +28
 **LPs**: Customer Obsession, Insist on the Highest Standards, Dive Deep
-**Best for**: "Tell me about a time you improved quality" / marketplace dynamics
+**Best for**: "Tell me about a time you improved quality" / "Tell me about a time you dove deep into data" / marketplace dynamics
 
-- **Situation**: 20% cancellation rate in marketplace. NPS was -12 — deep user dissatisfaction
-- **Task**: Fix root cause — matchmaking algorithm sending wrong service providers
-- **Action**: Root-cause analysis revealed provider-user mismatch patterns. Redesigned matching signals — skill match, location proximity, availability, historical performance
-- **Result**: Cancellations 20% → 3%. NPS -12 → +28
-- *Note: Overlaps with S001 action #2. Use as standalone when asked specifically about quality/customer experience*
+**Situation**: A few months into JD Xperts, daily cancellations stood at 30–35% overall, with vendor-side cancellations at 20%. With 95% new customers, every cancellation meant 100% churn — permanent loss. 45% of ops bandwidth was consumed managing this issue.
+
+**Task**: Find and fix the root cause of cancellations to make the commission-on-completion model viable.
+
+**Action**:
+1. **Spoke to customers first.** Users reported that vendors accepted orders but denied service after reaching the location. Initially attributed to vendor quality, but cancellation rates didn't correlate with vendor ratings — good-rated vendors were cancelling too.
+2. **Dug deeper into data.** Discovered a skill mismatch problem: appliance repair is specialized — AC ≠ washing machine ≠ refrigerator. The matchmaking system treated all vendors as interchangeable within "appliance repair." A vendor skilled in ACs was being sent to fix a washing machine, arriving on-site, realizing they couldn't do it, and cancelling.
+3. **Built skill-tag matching system.** Took inputs from vendors on specific skills, tested them via questionnaire and phone calls for edge cases, added granular skill tags to each profile. Rule-based matching — tag + rating against past appliance-specific cases. Technical implementation took just 15 days (2 sprint cycles).
+
+**Result**: Vendor cancellations dropped from 20% to 3%. NPS flipped from -12 to +28. Ops bandwidth freed up. Built the quality foundation that made commission-on-completion economics work.
+
+**Earned Secret**: "The data initially misled us — we assumed cancellation = bad vendor. But ratings measured attitude and service quality, not technical capability for that specific appliance. The fix wasn't a better algorithm — it was asking the right question: not 'who is good?' but 'who is good at THIS?'"
 
 ---
 
