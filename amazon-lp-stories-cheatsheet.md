@@ -11,12 +11,12 @@
 | Ownership | S001 (JD Xperts 0-to-1, ₹4.8cr ARR) | S009 (Self-serve vendor platform, ₹13cr unlock) | S019 (Failure: owned post-mortem) |
 | Invent and Simplify | S004 (Shared OMS — 3 months→3 weeks) | S012 (Anti-corruption layer, 48% order growth) | S013 (CRM-lite from scratch) |
 | Are Right, A Lot | S005 (Invented "Lost Potential Bookings" KPI) | S007 (LTV data → delayed launch, saved category) | S018 (Segmentation → PMF) |
-| Learn and Be Curious | S003 (LLM search — self-taught LangChain, fine-tuning) | S019 (Failure → changed research approach) | S015 (WordPress→AWS side project) |
+| Learn and Be Curious | S003 (LLM search — self-taught LangChain, fine-tuning) | S015 (Free blog → 100K users, self-taught infra) | S019 (Failure → changed research approach) |
 | Hire and Develop the Best | S014 (Built PM org from scratch, 6 PMs) | S001 (First hire, built full team) | — |
 | Insist on the Highest Standards | S007 (LTV analysis → delayed launch for quality) | S006 (Cancellations 20%→3%, NPS -12→+28) | S013 (Built CRM when none existed) |
 | Think Big | S010 (Deals MVP → ₹120M projected vertical) | S001 (Diversification from adtech to services) | S004 (Platform for all future verticals) |
 | Bias for Action | S008 (AC Repairs: 6x growth, ₹1cr revenue) | S012 (Headless booking engine, weeks not quarters) | S010 (Frugal MVP, live in weeks) |
-| Frugality | S010 (CSV-upload CMS → 18K users/day) | S013 (CRM-lite vs. Zendesk) | S004 (Build once, launch 4 verticals) |
+| Frugality | S010 (CSV-upload CMS → 18K users/day) | S015 (₹2500→₹800/mo, 100x traffic) | S013 (CRM-lite vs. Zendesk) |
 | Earn Trust | S007 (LTV data → convinced Business Head on pricing) | S019 (Owned failure, transparent post-mortem) | S016 (3x professional income) |
 | Dive Deep | S003 (Root-caused 4 failure buckets, built LLM pipeline) | S005 (Hourly data exposed hidden demand gaps) | S018 (50 interviews → 4 segments) |
 | Have Backbone; Disagree and Commit | S007 (Challenged Business Head pricing with LTV data) | S017 (Pushed back on template approach) | S011 (Vertical marketplace against horizontal) |
@@ -232,15 +232,22 @@ That last insight — that in emerging markets, you need product-led self-serve 
 
 ---
 
-### S011 — Influencing C-Suite for Vertical Marketplace ⚠️ SEED
-**LPs**: Think Big, Have Backbone; Disagree and Commit, Earn Trust
-**Best for**: "Tell me about a time you convinced leadership to change direction" / strategic vision
+### ★ S011 — Vertical Marketplace for Interior Design & Construction
+**LPs**: Think Big, Have Backbone; Disagree and Commit, Customer Obsession, Dive Deep
+**Best for**: "Tell me about a time you convinced leadership to change direction" / "Tell me about a time you identified a hidden user need" / strategic vision
 
-- **Situation**: Justdial's horizontal search model had limitations for certain business segments
-- **Task**: Convince C-suite to invest in vertical marketplace approach for SMBs
-- **Action**: Built business case — TAM analysis, competitive landscape, pilot design. Managed pushback from those invested in horizontal model
-- **Result**: Secured investment. Built vertical marketplace with measurable business results
-- *Needs detail: specific objections, pilot results, business case numbers*
+**Situation**: Justdial was seeing vendor churn in several categories. Leadership's initial diagnosis was low engagement — vendors were dormant on the platform and missing incoming leads. They asked me to build engagement features (short videos/reels). But when I dug into the data and spoke to churning vendors, I found a completely different root cause: vendors weren't just consumers of leads — they were also *buyers*. An interior designer needed cement dealers, lighting manufacturers, tile suppliers. They used Justdial for some of this, but also used IndiaMART and vertical marketplaces. Justdial actually had all this supply via its JD Mart platform, but vendors weren't aware of the full breadth of offerings. The problem wasn't engagement — it was visibility and awareness of the B2B ecosystem.
+
+**Task**: Validate the real churn driver and propose a solution. The CPO had already committed to the engagement/reels feature request from leadership. I had to decide whether to build what was asked or push back with a fundamentally different diagnosis.
+
+**Action**:
+1. **Validated the root cause.** Ran vendor interviews — vendors confirmed they used other platforms to find their own suppliers. User studies showed vendors didn't know Justdial listed designer home lighting manufacturers or specialized material dealers in their area. The gap was awareness and category discovery, not engagement.
+2. **Pushed back on reels/engagement features.** Presented data to CPO showing that engagement features wouldn't address the structural cause of churn. The CPO resisted — the original request had come top-down and was simpler to execute. I argued that reels would generate vanity metrics but not retention.
+3. **Proposed a vertical marketplace.** Built a v1 for interior designers, contractors, and architects — aggregating all the supplies and services these professionals need in one place. Goal: solve visibility and access first, then expand into fulfillment if traction justified it.
+
+**Result**: V1 launched, solving the visibility gap for select categories. Validated that vendors would engage with B2B discovery when offerings were curated for their professional needs. Established the foundation for a potential fulfillment marketplace — a fundamentally larger business than engagement features would have created.
+
+**Earned Secret**: "When vendors churn, the reflexive answer is 'build engagement features.' But vendors aren't social media users — they're businesses. They don't want reels; they want to find their cement dealer faster. The churn signal was actually a demand signal for a completely different product."
 
 ---
 
@@ -296,15 +303,23 @@ That last insight — that in emerging markets, you need product-led self-serve 
 
 ---
 
-### S015 — Indian Music Diaries: WordPress → AWS Migration ⚠️ SEED
-**LPs**: Learn and Be Curious, Dive Deep
-**Best for**: Technical depth / hands-on builder credibility / side project passion
+### ★ S015 — Indian Music Diaries: From Free Blog to 100K Users/Month
+**LPs**: Learn and Be Curious, Dive Deep, Frugality, Ownership
+**Best for**: "What do you do outside of work that makes you a better PM?" / technical depth / hands-on builder credibility / side project passion
 
-- **Situation**: Personal music blog on WordPress with poor performance (PageSpeed <50)
-- **Task**: Redesign and migrate to modern architecture on AWS
-- **Action**: AWS service selection, CDN setup, performance optimization, migration execution
-- **Result**: PageSpeed from <50 to >90. Modern scalable architecture
-- *Use for: "What do you do outside of work that makes you a better PM?" or technical credibility*
+**Situation**: Indian Music Diaries is an indie music magazine covering artists, events, and music news in India — a friend's project that I joined as a music enthusiast. The website started as a free blog with minimal infrastructure, poor performance (PageSpeed score ~30), and was serving about 1,000 users on a hosting setup costing ₹2,500/month.
+
+**Task**: Build and scale the platform from a hobby blog into a real content platform — handling traffic growth, performance, and cost optimization, all as a side project with no budget for enterprise tooling.
+
+**Action**:
+1. **Progressive infrastructure evolution.** Started with a free blog → hosted domain on third-party service → self-hosted WordPress → full ownership of hosting, caching, and optimization. Each step taught me a new layer of the web stack.
+2. **Performance engineering.** Added CDN layer for content delivery, implemented caching at multiple levels, optimized images and assets. Took PageSpeed Insights score from ~30 to 80+.
+3. **Built a content management system.** Created a custom CMS that manages how content is posted across all channels — not just the website but social and distribution channels too.
+4. **Cost optimization.** Reduced server costs from ₹2,500/month to ₹800/month while scaling from 1,000 to 100,000 users/month — a 100x traffic increase at 1/3rd the cost.
+
+**Result**: 100K monthly users (100x growth from 1,000). PageSpeed score from ~30 to 80+. Server costs down from ₹2,500 to ₹800/month. Fully self-managed infrastructure with CDN, custom CMS, and multi-channel content distribution.
+
+**Earned Secret**: "Every PM should build and operate something end-to-end — not just write PRDs about it. Running infrastructure taught me what 'latency' actually feels like to a user, what 'cost optimization' means when it's your own money, and why engineers push back when you ask for 'just one more feature' on a fragile system. It made me a fundamentally more empathetic and technically credible PM."
 
 ---
 
@@ -392,36 +407,57 @@ That last insight — that in emerging markets, you need product-led self-serve 
 | Ownership / end-to-end | S001 | "I was the first hire, negotiated my role, built the org" |
 | Simplification / innovation | S004 | "3 months → 3 weeks for new vertical launches" |
 | Data-driven decisions | S005 | "Averages were masking localized capacity gaps" |
-| Learning / curiosity | S019 | "I solved the wrong problem — changed my approach since" |
+| Learning / curiosity | S015 | "Built a 100K-user platform as a side project — taught me infra" |
 | Hiring / team building | S014 | "Built PM org from scratch — 6 PMs, 15+ cross-functional" |
 | Quality / standards | S007 | "−₹200 LTV per price-gouged customer — delayed launch" |
-| Big vision / ambition | S010 | "CSV MVP → ₹120M projected revenue vertical" |
+| Big vision / ambition | S011 | "Vendors don't want reels — they want a vertical marketplace" |
 | Speed / urgency | S012 | "Anti-corruption layer, launched in weeks, 48% order growth" |
 | Doing more with less | S013 | "Built CRM-lite from scratch vs. Zendesk — scaled 100% without hiring" |
 | Trust / influence | S007 | "₹650 swing per customer — the argument becomes arithmetic" |
 | Deep analysis | S018 | "50 customer interviews → 4 segments → CAC dropped 33%" |
-| Pushing back | S007 | "Delayed a launch leadership had committed to" |
+| Pushing back | S011 | "CPO wanted reels — I showed the real churn driver was supply access" |
 | Delivering results | S001 | "₹4.8cr ARR, 5.4x unit economics, from zero" |
 | People / culture | S014 | "Defined hiring bar, career paths, feedback cadence" |
 | Broad impact | S004 | "Shared OMS enabled 4 business lines, 99.99% uptime" |
 | Failure / learning | S019 | "Connect rate dropped 3pp — I'd given vendors a filter tool" |
 | Product-market fit | S018 | "Dance wasn't one market — it was four" |
 | New channel / growth | S012 | "Call center had 2x conversion rate of our app" |
+| AI/ML for business impact | S020 | "78% of 'spam' calls were real leads — salvaged ₹15cr" |
+| Side project / builder | S015 | "Free blog → 100K users, PageSpeed 30→80+, costs down 68%" |
+
+---
+
+### ★ S020 — Lead Salvaging with AI: ₹15cr Revenue Rescued from "Spam" Calls
+**LPs**: Customer Obsession, Invent and Simplify, Deliver Results, Dive Deep
+**Best for**: "Tell me about a time you found revenue in an unexpected place" / "Tell me about a time you used AI/ML to solve a business problem" / vendor trust
+
+**Situation**: Justdial's paying vendors were manually flagging 80,000 calls per day as "irrelevant" or "spam." My deep dive into call transcripts revealed a shocking insight: 78% of these flagged calls were actually high-intent users who were simply mismatched by the rigid keyword-based system. This was destroying vendor trust (VSAT at 81%) and costing millions in lost leads.
+
+**Task**: Stop the revenue leak and rebuild vendor trust by salvaging the 78% of good leads being incorrectly discarded. KPIs: reroute significant portion of leads, increase VSAT from 81% to >83%.
+
+**Action**:
+1. **Business-driven traffic segmentation.** We were GPU-bound — couldn't process all 80K calls in real-time. Created a prioritization matrix based on urgency of need × average order value. Focused expensive real-time processing on 25,000 daily calls with highest business impact; rest stayed on cheaper async path. Clear cost vs. latency trade-off.
+2. **Technical frugality on the sync path.** For real-time calls, implemented a "chunking" technique using keyword spotting to stop transcription early once intent was identified. Reduced required GPU compute by 75%, making the synchronous solution financially viable.
+3. **LLM-powered intent extraction and rerouting.** System used LLM to identify user's true intent from the transcript and automatically created a new, correctly matched lead — turning "spam" into revenue.
+
+**Result**: With ARPL (Average Revenue Per Lead) of ₹52, the system salvaged an estimated ₹15 crore (~$1.8M) in annual revenue. VSAT improved from 81% to 83.5% within first quarter. Built the business case for the larger strategic search platform overhaul (S003).
+
+**Earned Secret**: "The vendors weren't wrong to flag those calls — they were getting mismatched leads. But instead of fixing the matching upstream (a massive rebuild), we built a salvage engine downstream. Sometimes the fastest path to revenue isn't preventing the failure — it's recovering from it intelligently."
 
 ---
 
 ## ⚠️ Remaining Seeds — Not Yet Full STAR
 
-- **S002** — Unit economics (heavy overlap with S001 — use S001 as primary)
-- **S011** — C-suite vertical marketplace pitch (needs details)
+- **S002** — Unit economics (heavy overlap with S001 — use S001 as primary, deploy only if interviewer probes specifically on unit economics mechanics)
 - **S014** — Building PM Org (skipped for now — come back to it)
-- **S015** — Indian Music Diaries: WordPress → AWS (side project)
 - **S016** — Appliance Repair Restructure: 3x professional income (needs details)
 
 ## Gaps Filled ✅
 - ~~Failure/Learning~~ → **S019** (Phone Connect Rate failure)
 - ~~Data-driven persuasion with specific numbers~~ → **S007** (LTV analysis with exact ₹ figures)
 - ~~Product discovery / user research~~ → **S018** (50 interviews, 4 segments)
+- ~~AI/ML business impact~~ → **S020** (Lead Salvaging, ₹15cr rescued)
+- ~~Side project / builder credibility~~ → **S015** (Indian Music Diaries, 100K users)
 
 ---
 
