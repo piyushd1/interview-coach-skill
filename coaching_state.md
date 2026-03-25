@@ -1,5 +1,5 @@
 # Coaching State — Piyush Deveshwar
-Last updated: 2026-03-19
+Last updated: 2026-03-25
 
 ## Profile
 - Target role(s): Senior PM, Group PM, Staff PM, Principal PM, Business Head, Startup Operator
@@ -8,7 +8,7 @@ Last updated: 2026-03-19
 - Feedback directness: 5
 - Interview timeline: ~2026-03-24 (7 days, intensive — willing to work day and night)
 - Time-aware coaching mode: Focused (compressed full system given 7-day intensity)
-- Interview history: Active but not advancing — has been interviewing, never cleared an interview
+- Interview history: Passed Amazon EMXO screening round (2026-03-20). Full loop upcoming. Previous Amazon loop rejected for technical depth.
 - Biggest concern: Strong work stories, technical depth, understanding systems, standard business frameworks/case study
 - Known interview formats: [unknown — to be populated by Format Discovery Protocol during prep/mock]
 - Anxiety profile: unknown — set by hype
@@ -30,27 +30,35 @@ Last updated: 2026-03-19
 - Career narrative gaps:
   - Why did he leave Justdial? (unexplained on resume — will be asked in every screen)
   - Urban Company "Senior Manager Growth" → GPM at Justdial: was this product-led or ops-led? Needs crisp bridge narrative.
-- Story seeds: 16 pre-mapped in references/story-seeds.md (S001–S016). Top priority: S001 (JD Xperts P&L), S003 (LLM search), S005 (Lost Potential Bookings KPI), S007 (LTV → C-suite pricing), S011 (C-suite vertical marketplace pitch). Critical gaps: failure/learning story (none exists), peer influence without authority (thin), team management depth (only one story).
+- Story seeds: 22 full STAR stories in amazon-lp-stories-cheatsheet.md (S001, S003-S013, S015, S017-S026). All 16 Amazon LPs covered with 3+ stories each. S002 merged into S001. S014/S016 deprioritized. 6 new stories (S021-S026) add technical debugging depth for PM-T bar.
 
 ## Storybank
-| ID | Title | Primary Skill | Secondary Skill | Earned Secret | Strength | Use Count | Last Used |
-|----|-------|---------------|-----------------|---------------|----------|-----------|-----------|
-| S001 | Zero-to-One P&L: JD Xperts to ₹4.8cr ARR | P&L Ownership / 0-to-1 Building | GTM Execution | full | 4.5/5 | 0 | — |
-| S002 | 5.4x Unit Economics Transformation | Unit Economics / Financial Acumen | Pricing Strategy | seed only | TBD | 0 | — |
-| S003 | Solving 11% Search Failure with LLM Engine | AI/ML Product Thinking / Technical PM | Cross-Functional Leadership | seed only | TBD | 0 | — |
-| S004 | Foreseeing the Bottleneck: Shared OMS Architecture | Platform Strategy / System Design | Influence Without Authority | seed only | TBD | 0 | — |
-| S005 | Inventing "Lost Potential Bookings" KPI | Strategic Thinking / C-Suite Influence | Data-Driven Decision Making | seed only | TBD | 0 | — |
-| S006 | Cancellations 20% → 3% / NPS -12 → +28 | Problem Diagnosis / Marketplace Strategy | AI/ML Product Thinking | seed only | TBD | 0 | — |
-| S007 | LTV Analysis → C-Suite Pricing Decision | C-Suite Influence / Pricing Strategy | Data-Driven Decision Making | seed only | TBD | 0 | — |
-| S008 | Scaling AC Repairs to ₹1cr Revenue in 6 Months | 0-to-1 Building / GTM Execution | Marketplace Strategy | seed only | TBD | 0 | — |
-| S009 | 19% QoQ Revenue: Mobile Merchant Strategy | Marketplace Strategy / User Research | Retention/Churn | seed only | TBD | 0 | — |
-| S010 | Frugal MVP: Deals & Offers → 160K Daily Users | 0-to-1 Building / Product Sense | Frugal Innovation | seed only | TBD | 0 | — |
-| S011 | Influencing C-Suite for Vertical Marketplace | C-Suite Influence / Strategic Thinking | Business Case Building | seed only | TBD | 0 | — |
-| S012 | Headless Booking Engine: 48% Volume Growth | Platform Strategy / System Design | Technical Product Leadership | seed only | TBD | 0 | — |
-| S013 | Automated Complaint Resolution: -37% Reviews | Operations Strategy / AI/ML | Customer Experience | seed only | TBD | 0 | — |
-| S014 | Building PM Org from Scratch (6 PMs, 15+ XFN) | Team Building / People Management | Org Design | seed only | TBD | 0 | — |
-| S015 | Indian Music Diaries: WordPress → AWS Migration | Technical Depth / Hands-on Building | Performance Optimization | seed only | TBD | 0 | — |
-| S016 | Appliance Repair Restructure: 3x Professional Income | Business Model Innovation / Marketplace | Supply-Side Economics | seed only | TBD | 0 | — |
+| ID | Title | Primary Skill | Strength | Status |
+|----|-------|---------------|----------|--------|
+| S001 | Zero-to-One P&L: JD Xperts ₹4.8cr ARR (merged S002) | P&L Ownership | 4.5/5 | Full STAR + 4 layers |
+| S003 | LLM Search Engine: 11%→2% failure | AI/ML Technical PM | 4.5/5 | Full STAR + 4 layers |
+| S004 | Shared OMS: 3mo→3wk launches | Platform Strategy | 4/5 | Full STAR + 4 layers |
+| S005 | Lost Potential Bookings KPI | Strategic Thinking | 4/5 | Full STAR + 4 layers |
+| S006 | Cancellations 20%→3%, NPS turnaround | Problem Diagnosis | 4/5 | Full STAR + 4 layers |
+| S007 | LTV → Delayed Launch for Trust | C-Suite Influence | 4.5/5 | Full STAR + 4 layers |
+| S008 | AC Repairs: ₹1cr, 190K users | GTM Execution | 4/5 | Full STAR + 4 layers |
+| S009 | Self-Serve Vendor Platform: ₹13cr | Marketplace Strategy | 4.5/5 | Full STAR + 4 layers |
+| S010 | Frugal MVP Deals: 18K users/day | Frugal Innovation | 4/5 | Full STAR + 4 layers |
+| S011 | Vertical Marketplace Vision | Strategic Thinking | 3.5/5 | Full STAR + 4 layers |
+| S012 | Headless Booking Engine: 48% growth | System Design | 4.5/5 | Full STAR + 4 layers |
+| S013 | CRM-Lite: -37% neg reviews | Frugal Innovation | 4/5 | Full STAR + 4 layers |
+| S015 | Indian Music Diaries: 100K users | Technical Depth | 3.5/5 | Full STAR + 4 layers |
+| S017 | Category Exploration: +59% leads | Product Discovery | 4/5 | Full STAR + 4 layers |
+| S018 | Segmentation PMF: 4 segments | Customer Research | 4/5 | Full STAR + 4 layers |
+| S019 | FAILURE: Phone Connect Rate | Intellectual Humility | 4/5 | Full STAR + 4 layers |
+| S020 | Lead Salvaging AI: ₹15cr rescued | AI/ML Business Impact | 4.5/5 | Full STAR + 4 layers |
+| S021 | Login Pop-up Debug (Marketing Conflict) | Technical Debugging | 3.5/5 | Full STAR + 4 layers |
+| S022 | Merchant Metrics A/B Test | Data-Driven Prevention | 4/5 | Full STAR + 4 layers |
+| S023 | Day Pass: 4G Performance Debug | Mobile Performance | 4/5 | Full STAR + 4 layers |
+| S024 | OTP Failure → Notification Gateway | Platform Reliability | 4.5/5 | Full STAR + 4 layers |
+| S025 | ML Lead Ranking (XGBoost) | ML/Data Science | 4/5 | Full STAR + 4 layers |
+| S026 | Banner Targeting Bug (Silent) | Marketing Systems | 4.5/5 | Full STAR + 4 layers |
+| S014 | Building PM Org (deprioritized — IC role) | Team Building | TBD | Seed |
 
 ### Story Details
 
@@ -173,6 +181,7 @@ Three core decisions drove the outcome:
 | Date | Company | Role | Round | Result | Notes |
 |------|---------|------|-------|--------|-------|
 | ~2025 | Amazon | Senior PM-T | Full loop | Rejected | Completed full loop. Feedback: "fit for Senior PM but not Senior PM-T." Cleared business/product bars. Failed specifically on technical depth bar. |
+| 2026-03-20 | Amazon | Sr. PM Mobile Growth EMXO | Screening | Passed | Passed screening round. Full loop upcoming. HM shared: marketing team, Meta/Google for app downloads, data sharing constraint. |
 | ~2025 | Uber | Senior PM | Round 1 | Closed | Position closed, internal hire. Not a performance signal. |
 | ~2024 | Uber | Senior PM | Round 1 | Closed | Position closed. Not a performance signal. |
 
@@ -207,18 +216,24 @@ Three core decisions drove the outcome:
 - Job ID: 3182350 | Location: Bengaluru, IND, KA
 - Team: Emerging Marketplaces Cross Org (EMXO), Prime/Lifecycle/XCM — covers 10 emerging countries (India, Brazil, Mexico, AU, SG, UAE, Egypt, SA, Turkey, South Africa)
 - Category: Product Management — Technical (T-bar applies)
-- Status: Screening round TOMORROW (~2026-03-20)
-- Round formats:
-  - Round 1: Behavioral screen, ~45min (format: recruiter or HM TBD). LP-focused. Format Discovery not yet run.
-- Stories used in this loop: none yet
-- Key JD competencies (priority order): (1) Technical Product Ownership / System Architecture for mobile growth stack, (2) Mobile Growth / AARRR, (3) Cross-functional stakeholder influence, (4) Emerging market customer insight, (5) Data-driven / experimentation
-- Prep brief generated: 2026-03-18
-- Next action: Practice delivering S001, S003, S009, opener, and "Why Amazon" out loud. Run LP drills. All stories built — delivery practice is the gap.
+- **Status: PASSED SCREENING (2026-03-20). Full loop upcoming (5 rounds).**
+- Role context from HM: Marketing team works with Meta, Google for app downloads in emerging markets. Key constraint: cannot share data with these third-party companies (rival tech giants). Working with very little data is the core challenge.
+- Round formats (assumed standard Amazon 5-round loop):
+  - Round 1: LP/Behavioral — S001, S009, S006 (backup: S005)
+  - Round 2: LP/Behavioral — S007, S022, S011 (backup: S017)
+  - Round 3: Technical — S003, S024, S012 (backup: S004)
+  - Round 4: Product Sense — S018, S026, S025 (backup: S021)
+  - Round 5: Bar Raiser — S019, S008, S023 (backup: S010, S015)
+- Stories available: 22 full STAR with Technical Architecture + LP Flex + EMXO Connection + Quick Revision Anchors
+- Key JD competencies (priority order): (1) Technical Product Ownership / System Architecture for mobile growth stack, (2) Mobile Growth / AARRR, (3) Cross-functional stakeholder influence, (4) Emerging market customer insight, (5) Data-driven / experimentation, (6) Working with limited data from third parties
+- Prep brief generated: 2026-03-18 | Stories enhanced: 2026-03-25
+- Next action: Practice delivering stories out loud, focusing on "What I Actually Built" sections. Run LP drills using Quick Revision Anchors. Do mock interviews per round type.
 
 ## Active Coaching Strategy
 - Primary bottleneck: Technical depth credibility — confirmed by Amazon feedback ("fit for Senior PM, not Senior PM-T"). Business/product bars are being cleared.
-- Current approach: (1) Build technical stories with real depth — S003, S004, S012, S015 need architecture-level detail. (2) Practice verbal system design / technical decision walkthroughs. (3) Build business/product storybank in parallel to stay sharp on what's already working.
-- Rationale: He completed a full Amazon loop and nearly passed. He is not a weak interviewer. The gap is specific: technical peer-level conversations with SDMs and bar-raisers. Fix that one dimension and he clears.
+- Current approach: (1) ALL 22 stories now have "What I Actually Built" technical architecture sections. (2) 6 new stories (S021-S026) are specifically technical debugging stories — exactly what PM-T bar requires. (3) Every story has LP Flex notes, EMXO role framing, and Quick Revision Anchors for rapid study. (4) Round allocation maps 15 stories to 5 rounds with no repeats.
+- Rationale: He completed a full Amazon loop and nearly passed. The gap was technical depth. Now every story answers "what did you actually build?" with specific systems, tech stacks, architecture patterns, and trade-off decisions. The 6 new debugging stories (login bugs, 4G performance, notification systems, marketing targeting pipelines, ML lead ranking) give him a rich arsenal of technical depth stories that directly align with the EMXO marketing technology role.
+- Next phase: Delivery practice. Stories are built — need verbal practice, especially "What I Actually Built" sections and LP pivoting.
 
 ## Calibration State
 - Calibration Status: uncalibrated
