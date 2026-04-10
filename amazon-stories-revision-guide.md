@@ -80,27 +80,35 @@
 ### S003 — Solving 11% Search Failure with LLM Engine
 **LPs**: Customer Obsession, Invent and Simplify, Dive Deep, Learn and Be Curious | **Company**: Justdial
 
-**HOOK**: "JustDial's entire business was 'find anything local.' 1 in 9 searches was failing. I built a fine-tuned LLM engine to fix it — and turned 1.5 lakh dead searches a day into 90,000 high-intent leads."
+**HOOK**: "JustDial's entire business was 'find anything local.' 93,000 searches were failing every day. I built a tiered LLM engine to fix it — and turned dead search traffic into 55-60K high-intent leads daily."
 
-**SITUATION**: JustDial's core product promise was simple: search for any local business, find it. When 11% of searches failed — 1 to 1.5 lakh searches every day — we weren't just delivering bad UX. We were breaking that promise at scale. Every failed search was a user who left without connecting to a vendor: no connection event, no revenue. And the failure rate was growing, not shrinking. As India came online, more linguistically diverse users were arriving — Hinglish, vernacular, regional code-switching — patterns that our keyword-based Elasticsearch index was never built to handle. The people we were failing the most were the new users we needed most to retain.
+**SITUATION**: JustDial processed 8.5 lakh (850K) searches daily. 11% returned zero results — ~93,000 failed searches every day. These weren't searches for things JD didn't offer. They were real customers with real spending intent who couldn't express their need in a way keyword search understood. The failure rate was growing as India came online.
 
-I pulled raw failure logs and segmented them into 4 buckets: misspellings, colloquial/local language spellings, free-text natural language queries ("need someone to fix my geyser"), and Hinglish code-switching ("bijli ka kaam near me"). The last bucket was the hardest — the space of valid Hinglish spellings is essentially unbounded. No dictionary can enumerate them.
+I analyzed the 93K failures and found 7 distinct failure types, each requiring a different fix:
+- **Type 1 (~25K/day)** — Language failures (phonetic misspellings, Hinglish code-switching, regional script) → solvable by embedding model alone
+- **Type 2 (~20K/day)** — Symptom-first free-text ("my kitchen tap is leaking") → LLM intent extraction → pgvector
+- **Type 3 (~10K/day)** — Brand eponyms ("Aquaguard service" = water purifier repair) → LLM disambiguation
+- **Type 4 (~7K/day)** — Service vs. retail ambiguity → LLM routing
+- **Type 5 (~5K/day)** — Over-constrained long-tail → LLM constraint relaxation
+- **Type 6 (~17K/day)** — Hyperlocal supply gaps → **NOT a search problem** — fed into LPB metric (S005)
+- **Type 7 (~9K/day)** — Too-broad queries → LLM generates clarifying options
+
+This taxonomy was the decisive insight: ~17K/day weren't solvable by any search technology. Routing them to vendor recruitment instead of burning LLM compute on them was the right call.
 
 **TASK**: Fix search failure permanently — not with band-aids. I owned the end-to-end solution and led a cross-functional team of 8 across product, engineering, and data.
 
 **ACTION**:
 
 *Why the obvious solutions didn't work:*
-I evaluated three paths before committing. (1) Rules-based dictionary expansion could handle common English misspellings but was a dead end for Hinglish — you cannot enumerate infinite spelling variants of "electrician." (2) Google Vertex API had strong quality but the unit economics were broken: at 1L+ daily failures, API costs would have run ₹20–30L/year AND general models still handled Hinglish code-switching poorly — they're trained on clean internet text, not Indian local search patterns. Buying a better API rate couldn't fix a training data gap. (3) In-house fine-tuning had higher upfront cost but gave me full cost and quality control.
+(1) Rules-based dictionary expansion — dead end for Hinglish. Can't enumerate infinite spelling variants. (2) Google Vertex API — unit economics were broken: ₹2.1/query × 93K/day = ₹1.95L/day = **₹5.8cr/year**. AND general models handled Hinglish poorly (trained on clean internet text, not Indian local search code-switching). (3) In-house fine-tuning: ₹38L setup + ₹4L/month = **₹86L/year — 6.7x cheaper** + quality control. Chosen.
 
-Before committing to option 3, I looked for an existing foundation. We had a Whisper-based LLM transcription pipeline sitting partially idle between call processing jobs. I repurposed it rather than building from scratch — saved 6–8 weeks of foundational work.
+Before committing, I found an existing foundation: a Whisper-based LLM transcription pipeline idle between call processing jobs. Repurposed it — saved 6–8 weeks.
 
-*Technical design — 5-step pipeline:*
-1. **Query interceptor**: Monitored Elasticsearch in real-time, flagged failing queries, pushed them to an async queue. Key constraint: the LLM pipeline ran at P90 ~150ms — I couldn't block the user's request. Fail-open timeout at 250–300ms: if the interceptor took too long, it degraded gracefully to the legacy zero-results page. The app never hung.
-2. **Async queue (RabbitMQ)**: Fully decoupled the correction pipeline from the live request path. Worker nodes processed failed queries in parallel without touching user-facing latency.
-3. **Llama 3.2 intent extraction**: Fine-tuned on India-specific search patterns from our own query logs. Raw query → entity extraction → intent classification → corrected keyword generation. Hallucination guard: if the LLM's output didn't match our vendor category taxonomy whitelist, the system discarded the result rather than serving junk. TTL hop-counter of 1: if the corrected query also returned zero results, the system logged it for manual review and halted — no infinite retry loops.
-4. **Semantic matching**: Extracted keywords queried against pgvector embeddings of the full vendor catalog. ElastiCache layer for high-frequency matches to cut DB load.
-5. **WhatsApp retargeting**: Corrected results delivered as asynchronous "Did you mean ___?" messages. This served double duty: user recovery AND model validation — WhatsApp CTR became our proxy for model accuracy before we had formal evaluation tooling. 40% blended CTR.
+*Technical design — tiered pipeline:*
+1. **Query interceptor**: Monitored Elasticsearch, flagged zero-result queries, pushed to RabbitMQ. Fail-open at 250ms — the app never hung. 5-min TTL on messages — user has moved on if unprocessed after 5 min.
+2. **Embedding model first** (the key architectural decision): Query converted to 768-dim vector → pgvector cosine similarity against 5K pre-computed service category vectors. Confidence ≥0.7 → direct match delivered. This handles all of Type 1 (~25K/day) with zero LLM cost. *Why 0.7?* Tested thresholds 0.5–0.9 on 10K labeled test set. Below 0.7 = false positive spike (irrelevant suggestions). Above 0.7 = recall drop (rescuable queries missed). 0.7 = best F1.
+3. **Llama 3.2 for Types 2-7** (confidence <0.7 from above): Intent extraction, brand disambiguation, service/retail routing, constraint relaxation, clarifying option generation. Hallucination guard: LLM output validated against category taxonomy whitelist — mismatches discarded, user dropped to category browse. TTL hop-counter of 1 — no infinite retries.
+4. **WhatsApp/SMS delivery**: Corrected results pushed as "Looking for [X]? Here are top vendors near you." **62% CTR** — user has already bounced from the app but WhatsApp pulls them back. CTR was also our proxy for model accuracy before formal evaluation tooling existed.
 
 *Feedback loop:* Once WhatsApp CTR validated keyword accuracy, high-ranking corrected keywords were cached back into Elasticsearch — so future queries with the same pattern wouldn't fail in the first place.
 
@@ -109,22 +117,24 @@ Before committing to option 3, I looked for an existing foundation. We had a Whi
 *Rollout:* Batch-tested on last week's failed queries, manually QA'd all outputs, staged to a small app traffic slice, then two cities before full launch.
 
 **RESULT**:
-- Search failure: 11% → ~2% — removed 9pp of dead traffic from our core product
-- 90,000 high-intent leads daily from ~50,000 unique users via WhatsApp retargeting
-- Became the highest-volume lead generation channel on the entire platform — more than any paid acquisition
-- In-house model: <₹0.05/query marginal cost, 2-month payback vs. Vertex API costs
-- Feedback loop permanently improved base Elasticsearch search for Hinglish query patterns
+- Search failure: 11% → ~2%
+- ~49K searches rescued daily: 25K by embedding alone (Type 1), 24K by LLM pipeline (Types 2-7)
+- 17K/day Type 6 supply gaps routed to LPB metric → vendor recruitment — the system turned an unsolvable search problem into supply intelligence
+- 55-60K high-intent leads daily via WhatsApp at 62% CTR
+- 14% conversion on rescued searches (vs. 0% previously — these were zero-result queries)
+- Became the highest-volume lead generation channel — more than any paid acquisition
+- LLM accuracy: 71% precision / 58% recall at launch → 84% precision / 72% recall after 3 months of retraining
 
-**KEY DECISION**: In-house fine-tuning over Google Vertex API. Two independent reasons, both required: (1) Unit economics — Vertex cost didn't work at 1L+ daily failures. (2) Quality — general models had never seen India's local search code-switching patterns. You can't negotiate better API rates to fix a training data gap. You have to own the model.
+**KEY DECISION**: (1) In-house fine-tuning (₹86L/yr) over Vertex (₹5.8cr/yr) — 6.7x cheaper AND better Hinglish quality. Accepted 3-week quality regression during fine-tuning transition. (2) pgvector over Elasticsearch — already on Postgres, 5K categories is tiny, <50ms, zero new infra. (3) Embedding first / LLM second — 25K/day rescued at zero LLM cost by routing high-confidence matches directly, only escalating to LLM when needed.
 
 **EARNED SECRET**: "Most teams treat their LLM cost problem as procurement — negotiate better API rates. I treated the model as a product I owned. The quality gap on Hinglish wasn't solvable with a better vendor — it was solvable only with proprietary training data from our own search logs. That data moat is the thing you can't buy."
 
-**TECHNICAL DEPTH**: Python (LangChain), Llama 3.2 fine-tuned for Hinglish/code-switching on proprietary query logs, pgvector for semantic matching, ElastiCache for high-frequency match caching, Elasticsearch (base search + feedback loop cache), RabbitMQ async queue, WhatsApp Business API. P90 latency ~150ms. Fail-open at 250–300ms. TTL hop-counter of 1. Category taxonomy whitelist to prevent hallucination. 8-person team: 2 ML engineers, 3 backend, 1 data analyst, 1 QA, PM.
+**TECHNICAL DEPTH**: Python (LangChain), Llama 3.2 fine-tuned for Hinglish/code-switching on proprietary query logs (monthly retraining cadence — new terms and categories added). pgvector (PostgreSQL extension — same DB, 5K categories, <50ms). ElastiCache for high-frequency match caching. RabbitMQ async queue with 5-min TTL. WhatsApp Business API (62% CTR). Fail-open at 250ms. 0.7 confidence threshold (tested 0.5-0.9 on 10K labeled set, F1 optimized). Taxonomy whitelist hallucination guard. TTL hop-counter of 1. 8-person team. ML team owns model training + monitoring; PM owns threshold tuning, fallback logic, message templates.
 
 **BUSINESS TRADE-OFFS**:
-- In-house fine-tuning vs. Google Vertex API: Vertex deployed faster but the unit economics were broken at 1L+ daily failures AND quality on Hinglish was poor regardless. In-house gave 2-month payback and training data control. Accepted upfront build risk for long-term sustainability.
-- WhatsApp retargeting vs. in-app re-query prompt: WhatsApp gave 40% CTR but required separate permission flow and a new channel to maintain. In-app prompt was cleaner UX but lower engagement. Chose WhatsApp — 90K leads/day justified the operational complexity.
-- Fix 11% failure vs. improve the other 89%: highest marginal return was on dead traffic generating zero value. Left general search quality for later.
+- In-house fine-tuning vs. Vertex: Vertex ₹5.8cr/year vs in-house ₹86L/year (6.7x). Quality gap on Hinglish was also real — general models trained on clean internet text, not Indian search code-switching. Accepted 3-week quality regression during transition.
+- WhatsApp retargeting vs. in-app correction: Real-time in-app would add 1-3 seconds to EVERY search, not just failed ones. Async: show results instantly, deliver correction via WhatsApp. 62% CTR — user already bounced but WhatsApp pulls them back. In-app would have 0 latency impact but far lower reach.
+- Fix 11% failure vs. improve remaining 89%: highest marginal return was on dead traffic (0% → 14% conversion). Left general search quality for later.
 
 **WHAT MADE EXECUTION HARD**:
 - Creating labeled Hinglish training data from scratch — no off-the-shelf dataset for Indian local search patterns; had to annotate manually from existing query logs before any fine-tuning could begin.
@@ -722,42 +732,58 @@ The unlock that made option 2 viable: I realized callers don't need to complete 
 
 ---
 
-### S020 — AI-Powered Lead Salvaging: 8K Mismatched Leads/Day Recovered
-**LPs**: Customer Obsession, Invent and Simplify, Deliver Results, Dive Deep | **Company**: Justdial
+### S020 — Lead Salvaging: ASR + NER Pipeline for "Spam" Calls
+**LPs**: Think Big, Customer Obsession, Invent and Simplify | **Company**: Justdial
 
-**HOOK**: "I discovered that 78% of vendor 'spam' flags were actually real leads going to the wrong vendor — I built an AI salvage engine that recovered 8,000 mismatched leads per day."
+**HOOK**: "The platform was discarding 80,000 calls a day as 'spam.' I discovered 78% were real customers going to the wrong vendor. I built an ASR + NER pipeline that salvaged ~30K new leads daily — at a 20x ROI on GPU cost."
 
-**SITUATION**: Justdial's paying vendors were flagging 80,000 calls/day as "irrelevant" or "spam." My deep dive into call transcripts revealed: 78% (~62,000) were high-intent users simply mismatched by the rigid keyword system — only ~18,000 were genuinely spam. VSAT at 81%, driving vendor churn.
+**SITUATION**: JD's call center processed 80,000 calls daily that vendors had marked as spam. The platform discarded all of them. I hypothesized "spam" was a lazy catch-all — ran an audit on a 2,000-call sample (3 days, manual review). Found only **22% were true spam.** The other 78% — ~62,500 calls/day — contained real customer intent being thrown away.
 
-**TASK**: Stop vendor churn and rebuild trust by proving lead quality wasn't the problem — matching was. Increase VSAT from 81% to >83%.
+I built a 10-bucket taxonomy (A-J) for what was actually happening:
+- **A (~20K/day)**: Mismatched service intent (AC install caller → AC repair vendor) — reroute
+- **B (~6.5K)**: Location mismatch — match to local vendor
+- **C (~6.5K)**: Brand/model mismatch — reroute to right vendor
+- **D (~8K)**: Job seekers — route to JD Jobs
+- **E (~6.5K)**: Economic mismatch — partial / batch nearby
+- **F (~3K)**: B2B volume mismatch — route to JD Mart
+- **G (~4K)**: Post-sales support — follow-up ticket to original vendor
+- **H (~2.5K)**: Product vs. service confusion — route to JD Shopping
+- **I (~5.5K)**: Window shoppers — WhatsApp retarget
+- **J (~17.5K)**: Actual spam/telemarketing — discard + flag
+
+**TASK**: Build a pipeline to classify all 80K calls and route the 62.5K salvageable ones. KPI: net-new leads from a channel the platform was treating as waste.
 
 **ACTION**:
-1. I designed business-driven traffic segmentation. GPU-bound — couldn't process all 80K in real-time. I used a pre-computed urgency matrix (category type x average order value) for routing. Focused expensive real-time processing on 25,000 daily calls with highest business impact; rest on cheaper async path.
-2. I implemented "chunking" technique — keyword spotting to stop transcription early once intent identified. Reduced GPU compute by 75%.
-3. I built LLM-powered intent extraction and rerouting. System extracted true intent from transcript, created correctly matched new lead. For salvaged leads, I appended "AI Verified User Intent" tag. If category was completely wrong, created net-new lead.
+1. **ASR (Whisper-based) with early-stop chunking**: Transcribe first 10-15 sec, stop if confidence >80%. Most callers state intent in first 10 seconds. Saves **75% GPU compute** vs. full 48-sec transcription.
+2. **NER pipeline**: Extracts structured entities — service type, brand, location, intent signals ("kaam chahiye" = "I want work done" vs. "koi kaam hai kya" = "is there any work for me?"), price mentions, follow-up signals. Turns audio blob into searchable structured data.
+3. **Llama 3.2 bucket classification**: NER tells you WHAT entities are present. LLM tells you WHAT THE CALLER WANTS. Critical: "Bhai koi kaam hai kya, electrician hoon" — NER extracts {role: electrician}. LLM classifies as Bucket D (job seeker), not Bucket A (customer needing electrician). Keyword matching alone misclassifies ~30% of these.
+4. **Dual-path routing**: 25K real-time (Bucket A — mismatched intent, caller might try competitor in minutes) + 55K batch (30-min latency acceptable). All-real-time = 4x GPU cost. Dual-path = right economics.
+5. **Shared pgvector layer**: Once LLM extracts corrected intent, same pgvector system used in S003 maps it to the right service category → routes to correct vendor.
 
 **RESULT**:
-- ~8,000 leads/day salvaged and rerouted
-- VSAT: 81% → 83.5%
-- Revenue improvement: ~₹15L/month (saved vendor churn + more leads available)
-- Built business case for larger strategic search platform overhaul (S003)
+- 62.5K real customers salvaged daily from "spam" bin
+- ~30-35K new service leads/day (Buckets A-C)
+- Cross-vertical: ~13.5K/day → JD Jobs, JD Mart, JD Shopping
+- GPU cost: ₹8-10L/month; revenue: ₹2.1cr/month → **~20x ROI**
+- Vendor spam-marking rate: 80K/day → ~55K/day over 3 months (virtuous cycle — better-matched leads = fewer mismatched calls)
+- Classification accuracy: ~82%, validated weekly on 500-call human audit
 
-**KEY DECISION**: Sync/async dual path over all-sync (GPU-prohibitive). Applied real-time only to high-value calls (urgency x order value matrix), batch for rest.
+**KEY DECISION**: (1) Dual-path (25K real-time + 55K batch) over all-real-time — 4x GPU savings, no material loss of value. (2) Early-stop chunking over full transcription — 75% GPU savings. (3) LLM classification over keyword matching — keywords miss context ("kaam chahiye" is ambiguous; LLM is not).
 
-**EARNED SECRET**: "78% of 'spam' was real demand going to the wrong place. Sometimes the fastest path to vendor trust isn't preventing the failure — it's recovering from it intelligently."
+**EARNED SECRET**: "The vendors weren't wrong to flag those calls — from their perspective, a caller wanting service in the wrong city IS spam. But 78% of those calls were real customers. The fix wasn't to convince vendors to re-evaluate 80K calls. It was to build a system that routed the right caller to the right vendor before it ever reached the wrong one."
 
-**TECHNICAL DEPTH**: GPU-accelerated transcription, in-house LLM for intent extraction, keyword spotting engine (chunking — 75% GPU reduction), sync/async dual processing paths. 25K sync + 55K async. Pre-computed urgency routing matrix (Plumber = Urgent, Wedding Planner = Non-Urgent). Auto-rerouting with net-new lead creation.
+**TECHNICAL DEPTH**: Whisper ASR with early-stop chunking (10-15s, confidence threshold >80%). NER extracts: service_type, brand, location, intent_signals, price_mentions, followup_signals. Llama 3.2 bucket classification with confidence score and action routing. Dual-path queue: PRIORITY (Bucket A) → real-time, 60-sec delivery. All others → 15-min micro-batch. pgvector matching (shared with S003 — same 5K-category catalog). Safety net: double-rejection queue — if rerouted lead also rejected by second vendor, goes to human ops review within 4 hours. Weekly 500-call accuracy audit. Retraining triggered when persistent misclassification patterns identified (most common confusion: Bucket E vs. Bucket A — both contain "nahi kar sakte").
 
 **BUSINESS TRADE-OFFS**:
-- Process all 80K calls vs. focus on high-value 25K: processing all 80K in real-time was GPU-prohibitive. The urgency matrix (category × average order value) accepted imperfect coverage for economic viability — a deliberate value judgment baked into the architecture.
-- Active rerouting vs. showing intent context to vendors: rerouting is more aggressive but more effective. Showing extracted intent to vendors preserves their autonomy but leads to lower conversion on salvaged leads. Chose rerouting with transparency (AI Verified User Intent tag) as the trust-building mechanism.
-- Build on existing call infrastructure vs. new pipeline: existing infrastructure constrained data format but was available immediately. A new pipeline would have been cleaner but months away. Chose speed over architecture purity.
+- Process all 80K in real-time vs. dual-path: all-real-time was GPU-prohibitive (4x cost). Only Bucket A was urgent enough to justify real-time. Other buckets (job seekers, window shoppers, B2B) don't lose value in 30 minutes. Dual-path reduced GPU cost by ~75%.
+- Active rerouting vs. showing intent context to vendors: rerouting is aggressive but effective — creates a new lead routed correctly. Showing context to vendors preserves vendor autonomy but lower conversion (vendor still has to decide to call back). Chose rerouting with "AI Verified User Intent" tag as trust mechanism.
+- Build new pipeline vs. build on existing call infrastructure: existing infra constrained data format but was available immediately. New pipeline = cleaner architecture but 3+ months away. Chose speed — revenue from 62.5K salvaged calls justified taking the technical debt.
 
 **WHAT MADE EXECUTION HARD**:
-- GPU compute allocation — the salvage engine competed with other GPU-intensive workloads on shared infrastructure. Getting dedicated GPU resources required financial justification and political capital.
-- The chunking technique (stopping transcription early on keyword match) required careful calibration — too early missed context, too late wasted compute. Finding the right threshold took weeks of parameter tuning.
-- Vendor trust: vendors initially questioned whether AI-rerouted leads were legitimate. The "AI Verified User Intent" tag needed to feel authoritative, not suspicious — UX copy was surprisingly important for adoption.
-- The intent extraction LLM required the same vendor taxonomy whitelist as S003 to prevent bad rerouting — had to maintain and update this whitelist as categories and subcategories evolved.
+- Early-stop chunking calibration: too early (5-7 sec) missed context needed for bucket classification; too late (20+ sec) wasted compute. The 10-15 sec threshold took weeks of parameter tuning against manual review.
+- Vendor trust: vendors initially questioned whether AI-rerouted leads were real. The "AI Verified User Intent" tag + 4-hour double-rejection review queue were both necessary for adoption.
+- Shared pgvector taxonomy with S003: the intent extraction LLM needed to map to the same 5K-category whitelist. Maintaining and updating this list as categories evolved required coordination between two separate product initiatives.
+- Bucket E vs. Bucket A confusion: both contain "nahi kar sakte" ("can't do it") but mean different things. Persistent misclassification required additional NER signal (price mentions distinguish economic mismatch from service mismatch).
 
 ---
 
