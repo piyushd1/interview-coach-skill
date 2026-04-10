@@ -876,7 +876,9 @@ Key architecture insight: the embedding model alone handles Type 1 (high cosine 
 **LPs**: Think Big, Customer Obsession, Invent and Simplify
 **Best for**: "Tell me about a time you used data to find a hidden opportunity" / "Tell me about a time you used AI to solve a business problem" / "Tell me about a time you challenged an assumption the org held"
 
-**Situation**: JD's call center processed 80,000 calls daily that vendors had marked as "spam." The platform was discarding all of them. I hypothesized that "spam" was a lazy catch-all — vendors were marking calls as spam for reasons that had nothing to do with the caller being a spammer. I ran an audit: transcribed a 2,000-call sample over 3 days. Found that only **22% were actual spam** (telemarketers, credit card sales). **The remaining 78% — roughly 62,500 calls/day — contained real customer intent that was being thrown away.**
+**Situation**: JD had introduced a customer-friendly refund policy: if a vendor marked a call as spam, JD refunded the caller. Good for trust — but it created a perverse incentive. Vendors discovered they could mark ANY unwanted call as spam (too far away, too small a job, wrong brand, already busy) and the platform absorbed the cost. Spam-marked volume spiked to 80K calls/day. JD was issuing refunds on calls that weren't actually spam — bleeding money on a P&L problem disguised as a product quality problem.
+
+I ran an audit: transcribed a 2,000-call sample over 3 days. Found that only **22% were actual spam** (telemarketers, credit card sales). **The remaining 78% — roughly 62,500 calls/day — were real customers going to the wrong vendor.** JD was losing money refunding legitimate customer interactions AND discarding 62K leads daily. Two problems, one system.
 
 I segmented the 78% into a 10-bucket taxonomy (A–J):
 | Bucket | What's happening | ~Daily volume | Salvageable? |
@@ -892,7 +894,7 @@ I segmented the 78% into a 10-bucket taxonomy (A–J):
 | I | Window shoppers / price comparison | ~5.5K | PARTIAL — WhatsApp retarget |
 | J | Actual spam/telemarketing | ~17.5K | NO — discard + flag |
 
-**Task**: Build a system to classify all 80K calls, salvage the 62.5K, and route them to the right place. KPI: net-new leads from a channel the platform was treating as waste.
+**Task**: Two KPIs: (1) Stop the refund bleeding — prove these aren't spam so the refunds aren't warranted. (2) Salvage the 62.5K real leads being discarded daily. Build a system to classify, route, and recover them.
 
 **Action**:
 1. **ASR (Whisper-based) transcription with early-stop chunking.** Most callers state their need in the first 10 seconds — "AC install karwana hai, Whitefield mein." Early-stop: transcribe first 10-15 sec, stop if confidence >80%. Saves **75% GPU compute** vs. full 48-sec transcription. Full transcription only for ambiguous calls.
@@ -900,20 +902,29 @@ I segmented the 78% into a 10-bucket taxonomy (A–J):
 3. **Llama 3.2 bucket classification.** Takes NER output + full transcript context → classifies into Bucket A-J. *Key insight:* NER tells you WHAT entities are mentioned. The LLM tells you WHAT THE CALLER WANTS. "Bhai koi kaam hai kya, electrician hoon" — NER extracts {role: electrician}. But is this a customer wanting an electrician, or an electrician looking for work? Only the LLM makes that distinction from context.
 4. **Dual-path routing for cost efficiency.** 25K real-time (Bucket A — mismatched intent, high urgency, caller might try competitor within minutes) + 55K batch (30-min latency acceptable for Buckets B-I). Real-time for all 80K = 4x GPU cost. Dual-path = right cost-quality trade-off.
 5. **pgvector matching (shared with S003).** Once LLM classifies the call and extracts intent, the same pgvector layer used in search rescue maps the intent to the right service category and routes to the correct vendor.
+6. **GPU constraint and three-level tiered processing (when the canvas expanded).** After the transcription data proved 78% weren't spam, the refund policy was tightened — spam marking now required transcription validation before any refund was issued. This killed the gaming but surfaced a bigger question: if 78% of "spam" calls had real intent, what about the 3-5 lakh connected-but-unconverted calls happening every day? The canvas expanded from 80K to 3L+ calls/day. Same H100 budget. Three layers of optimization:
+   - **Pre-filter** (before transcription): call duration <10 sec = dropped call, skip. Vendor's historical spam-mark rate: vendors who mark 90%+ as spam get priority processing. Category ticket value: high-value categories first. Eliminates ~40% of calls before any GPU spend.
+   - **Confidence-based routing** (after early-stop ASR): if NER confidence >90%, route via lightweight rules engine — no LLM needed. "AC install karwana hai Whitefield mein" → NER extracts {service: AC_installation, location: Whitefield} at high confidence → rules engine handles it. Reserve Llama 3.2 for genuinely ambiguous cases. Reduces LLM calls by ~60%.
+   - **Model distillation** (3 months in): after accumulating 100K+ Llama-labeled examples, trained a smaller distilled model to handle the 80% common cases (Buckets A, D, E, J) at 95% accuracy. Full Llama 3.2 only runs on the 20% edge cases. GPU cost down ~70% for LLM calls.
 
-**Result**: 62.5K real customers salvaged daily from the "spam" bin. ~30-35K new service leads/day (Buckets A-C). Cross-vertical routing: ~13.5K/day to JD Jobs, JD Mart, JD Shopping. ~4K/day follow-up tickets. GPU infra cost: ₹8-10L/month. Revenue from salvaged leads: ~₹2.1cr/month. **~20x ROI.** Vendor spam-marking rate dropped from 80K/day to ~55K/day over 3 months (virtuous cycle — better matched leads = fewer mismatched calls to mark).
+**Capacity math after optimization:**
+- Before: 80K calls/day, ₹10L/month on H100s
+- After: 3L calls/day → pre-filter removes 40% → 1.8L need processing → 60% via NER+rules (no LLM) = 1.08L cheap processing → 40% need LLM (72K) → distilled model handles 80% (57.6K) → only 14.4K/day need full Llama 3.2
+- Cost: ₹14L/month — **40% cost increase for 375% more coverage**
 
-**Earned Secret**: "The vendors weren't wrong to mark those calls as spam — from their perspective, a caller asking for service in the wrong city or for the wrong brand IS spam. But 78% of those calls were real customers JD was discarding. The fix wasn't to convince vendors to re-evaluate 80K calls manually. It was to build a system smart enough to decide FOR them — and route the right caller to the right vendor before the call ever happened again."
+**Result**: Refund bleeding stopped — transcription validation proved 78% of "spam" marks were invalid, tightening the policy. 62.5K real customers salvaged daily. ~30-35K new service leads/day (Buckets A-C). Cross-vertical routing: ~13.5K/day to JD Jobs, JD Mart, JD Shopping. ~4K/day follow-up tickets. At scale (3L calls/day): ₹14L/month GPU cost generating ₹2.1cr/month+ revenue. **~15x ROI at expanded scale.** Vendor spam-marking rate: 80K/day → ~55K/day over 3 months (virtuous cycle).
+
+**Earned Secret**: "The vendors weren't wrong to mark those calls as spam — a caller asking for service in the wrong city IS spam to them. The refund policy was well-intentioned but created a perverse incentive. The transcription system served two purposes simultaneously: it stopped the refund gaming AND salvaged the leads. Once you have the intelligence to understand voice intent, you can apply it earlier and earlier — V1 fixes calls after they fail, V2 prevents failures before they happen, V3 intercepts live calls in real-time. A good system creates the conditions for its own obsolescence."
 
 **What I Actually Built**:
 - **System/Service**: ASR + NER + LLM classification pipeline for voice intent extraction and cross-vertical lead routing
 - **Tech Stack**: Whisper-based ASR (early-stop chunking at 10-15s), NER pipeline (structured entity extraction), Llama 3.2 for 10-bucket classification, dual-path queue (real-time PRIORITY + batch), pgvector (shared with S003 search system), WhatsApp retargeting for Buckets E/I
 - **Architecture**: 80K calls → Whisper ASR (early-stop if confidence >80% after 15s) → NER extracts entities → Llama 3.2 classifies bucket + assigns confidence → action routing: Buckets A-C: pgvector match → new lead → correct vendor. Bucket D: JD Jobs. Buckets F/H: JD Mart / JD Shopping. Bucket G: follow-up ticket. Buckets E/I: WhatsApp retarget. Bucket J: discard + flag. Safety net: double-rejection queue — if rerouted lead is also rejected by second vendor, goes to human ops review within 4 hours.
-- **Key Technical Decision**: Dual-path (25K real-time + 55K batch) over all-real-time. All-real-time = 4x GPU cost. Only Bucket A (mismatched intent) is urgent enough for real-time — caller might try a competitor within minutes. All other buckets tolerate 30-minute batch latency without losing value.
-- **Scale**: 80K calls/day processed. 62.5K salvageable. ~51K successfully classified + actioned. ~30-35K new service leads/day. GPU ₹8-10L/month, revenue ₹2.1cr/month = 20x ROI.
+- **Key Technical Decision**: (1) Dual-path (25K real-time + 55K batch) over all-real-time — 4x GPU savings. (2) Three-level tiered processing when canvas expanded to 3L calls/day: pre-filter (call duration, vendor spam history, ticket value) eliminates 40%; confidence-based routing (NER >90% → rules engine, no LLM) reduces LLM calls 60%; model distillation (smaller model for 80% common cases) cuts full-LLM calls to 14.4K/day from an original 80K base. (3) Batch economics: off-peak spot instances for non-urgent processing. Result: 375% more coverage at 40% cost increase.
+- **Scale**: Expanded from 80K → 3L calls/day. 62.5K salvageable. ~30-35K new service leads/day. At expanded scale: GPU ₹14L/month, revenue ₹2.1cr/month+.
 
 **LP Flex**:
-- **Think Big**: Lead with "The platform was discarding 78% of its inbound call volume as 'spam.' I saw it as a lead generation opportunity worth ₹2cr/month."
+- **Think Big**: Lead with "The platform was discarding 78% of its inbound call volume as 'spam.' That was the V1 problem. The bigger realization was that if 78% of *spam-marked* calls had real intent, what about the 3-5 lakh calls that connected but didn't convert? V1 salvages failed calls. V2 pre-filters vendors so mismatches never happen. V3 intercepts live calls in real-time and offers transfers. V4 replaces the IVR entirely with natural language routing. A good system creates the conditions for its own obsolescence."
 - **Customer Obsession**: Lead with "62,500 real customers were being thrown away every day. The vendors weren't wrong to flag them — they were going to the wrong place. We fixed the routing."
 - **Invent and Simplify**: Lead with "Built ASR + NER + LLM pipeline that turns unstructured audio into structured, routable leads — shared pgvector layer with S003 search rescue."
 - **Dive Deep**: Lead with "Transcribed 2,000 calls manually, built a 10-bucket taxonomy — found that 'spam' was actually 9 distinct salvageable patterns and only 1 true discard."
@@ -924,9 +935,9 @@ I segmented the 78% into a 10-bucket taxonomy (A–J):
 **Emerging market angle**: India's "call-first" behavior means voice intent extraction is more valuable here than in markets with digital-first users. Direct EMXO parallel.
 
 **Quick Revision Anchors**:
-- Key phrases: "78% of 'spam' was real customers going to wrong vendor" | "10-bucket taxonomy A-J" | "early-stop chunking saves 75% GPU compute" | "NER tells you WHAT entities, LLM tells you WHAT they WANT" | "shared pgvector layer with search rescue"
-- Metric anchors: 80K calls/day → 62.5K salvageable → ~51K actioned | 30-35K new service leads/day | GPU ₹8-10L/month, revenue ₹2.1cr/month = 20x ROI | spam rate 80K→55K/day (virtuous cycle)
-- Decision point: Dual-path (25K real-time Bucket A + 55K batch) over all-real-time — 4x GPU savings. Early-stop chunking over full transcription — 75% GPU savings.
+- Key phrases: "refund policy created perverse incentive" | "P&L problem disguised as product quality problem" | "78% were real customers going to wrong vendor" | "10-bucket taxonomy A-J" | "NER tells you WHAT entities, LLM tells you WHAT they WANT" | "pre-filter → confidence routing → model distillation" | "conditions for its own obsolescence"
+- Metric anchors: 80K → 3L calls/day expanded canvas | 62.5K salvageable/day | 30-35K new service leads/day | pre-filter eliminates 40%, confidence routing cuts LLM 60%, distillation reduces full-LLM to 14.4K/day | ₹14L/month GPU at 3L scale, 375% coverage for 40% cost increase | spam rate 80K→55K/day (virtuous cycle)
+- Decision points: (1) Three-level tiered processing over naive scaling — 375% more coverage at 40% cost increase. (2) Model distillation after 3 months — smaller model handles 80% common cases at 95% accuracy. (3) V1-V4 evolution: reactive salvage → proactive filtering → real-time interception → IVR replacement.
 
 ---
 
