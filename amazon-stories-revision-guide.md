@@ -80,41 +80,57 @@
 ### S003 — Solving 11% Search Failure with LLM Engine
 **LPs**: Customer Obsession, Invent and Simplify, Dive Deep, Learn and Be Curious | **Company**: Justdial
 
-**HOOK**: "I cut search failure from 11% to ~2% and generated 90,000 high-intent leads daily from previously dead traffic using a fine-tuned LLM engine."
+**HOOK**: "JustDial's entire business was 'find anything local.' 1 in 9 searches was failing. I built a fine-tuned LLM engine to fix it — and turned 1.5 lakh dead searches a day into 90,000 high-intent leads."
 
-**SITUATION**: Justdial processed millions of searches daily, but 11% were failing — ~1-1.5 lakh searches. 3% true failures (zero results), 8% returned poor-quality results. Failures clustered into 4 buckets: misspellings, colloquial/local language spellings, free-text natural language queries, and Hindi/Hinglish code-switched text.
+**SITUATION**: JustDial's core product promise was simple: search for any local business, find it. When 11% of searches failed — 1 to 1.5 lakh searches every day — we weren't just delivering bad UX. We were breaking that promise at scale. Every failed search was a user who left without connecting to a vendor: no connection event, no revenue. And the failure rate was growing, not shrinking. As India came online, more linguistically diverse users were arriving — Hinglish, vernacular, regional code-switching — patterns that our keyword-based Elasticsearch index was never built to handle. The people we were failing the most were the new users we needed most to retain.
 
-**TASK**: Fix search failure rate. I owned end-to-end solution, led cross-functional team of 8 across product, engineering, and data.
+I pulled raw failure logs and segmented them into 4 buckets: misspellings, colloquial/local language spellings, free-text natural language queries ("need someone to fix my geyser"), and Hinglish code-switching ("bijli ka kaam near me"). The last bucket was the hardest — the space of valid Hinglish spellings is essentially unbounded. No dictionary can enumerate them.
+
+**TASK**: Fix search failure permanently — not with band-aids. I owned the end-to-end solution and led a cross-functional team of 8 across product, engineering, and data.
 
 **ACTION**:
-1. I evaluated 3 options: (a) expand rules-based dictionary — rejected, can't enumerate Hinglish variants. (b) Google Vertex API — strong quality but per-query cost at 1L+ daily failures was unworkable. (c) Fine-tune in-house model.
-2. I chose option 3 and repurposed existing internal LLM entity extraction service (built for phone call transcripts — Whisper pipeline) as an independent search service.
-3. I designed a 5-step pipeline: query interceptor (fail-open at 250-300ms) → async queue → Llama 3.2 intent extraction → pgvector semantic matching with ElastiCache caching → WhatsApp retargeting "Did you mean ___?" (40% blended CTR). If the LLM hallucinated an intent that didn't match our strict vendor category taxonomy whitelist, the system discarded the output. I implemented a strict TTL hop-counter of 1 to prevent infinite retry loops.
-4. I evolved unit economics: external LLM API → cheaper hosted model → fully in-house fine-tuned Llama 3.2. Moving in-house fixed Hinglish quality.
-5. Staged rollout: batch-tested on previous week's failed queries, manually QA'd, then small app traffic percentage, then two cities.
+
+*Why the obvious solutions didn't work:*
+I evaluated three paths before committing. (1) Rules-based dictionary expansion could handle common English misspellings but was a dead end for Hinglish — you cannot enumerate infinite spelling variants of "electrician." (2) Google Vertex API had strong quality but the unit economics were broken: at 1L+ daily failures, API costs would have run ₹20–30L/year AND general models still handled Hinglish code-switching poorly — they're trained on clean internet text, not Indian local search patterns. Buying a better API rate couldn't fix a training data gap. (3) In-house fine-tuning had higher upfront cost but gave me full cost and quality control.
+
+Before committing to option 3, I looked for an existing foundation. We had a Whisper-based LLM transcription pipeline sitting partially idle between call processing jobs. I repurposed it rather than building from scratch — saved 6–8 weeks of foundational work.
+
+*Technical design — 5-step pipeline:*
+1. **Query interceptor**: Monitored Elasticsearch in real-time, flagged failing queries, pushed them to an async queue. Key constraint: the LLM pipeline ran at P90 ~150ms — I couldn't block the user's request. Fail-open timeout at 250–300ms: if the interceptor took too long, it degraded gracefully to the legacy zero-results page. The app never hung.
+2. **Async queue (RabbitMQ)**: Fully decoupled the correction pipeline from the live request path. Worker nodes processed failed queries in parallel without touching user-facing latency.
+3. **Llama 3.2 intent extraction**: Fine-tuned on India-specific search patterns from our own query logs. Raw query → entity extraction → intent classification → corrected keyword generation. Hallucination guard: if the LLM's output didn't match our vendor category taxonomy whitelist, the system discarded the result rather than serving junk. TTL hop-counter of 1: if the corrected query also returned zero results, the system logged it for manual review and halted — no infinite retry loops.
+4. **Semantic matching**: Extracted keywords queried against pgvector embeddings of the full vendor catalog. ElastiCache layer for high-frequency matches to cut DB load.
+5. **WhatsApp retargeting**: Corrected results delivered as asynchronous "Did you mean ___?" messages. This served double duty: user recovery AND model validation — WhatsApp CTR became our proxy for model accuracy before we had formal evaluation tooling. 40% blended CTR.
+
+*Feedback loop:* Once WhatsApp CTR validated keyword accuracy, high-ranking corrected keywords were cached back into Elasticsearch — so future queries with the same pattern wouldn't fail in the first place.
+
+*Unit economics evolution:* External LLM API (fast to deploy, expensive) → cheaper hosted model → fully in-house fine-tuned Llama 3.2. Each stage reduced cost per query and improved Hinglish quality. Final state: <₹0.05/query marginal cost, 2-month payback vs. Vertex.
+
+*Rollout:* Batch-tested on last week's failed queries, manually QA'd all outputs, staged to a small app traffic slice, then two cities before full launch.
 
 **RESULT**:
-- Search failure: 11% → ~2%
-- 90,000 high-intent leads daily from ~50,000 unique users via WhatsApp retargeting (~40% blended CTR)
-- Turned previously dead search traffic into the highest-volume lead generation channel
-- In-house model: <₹0.05/query marginal cost, 2-month payback
+- Search failure: 11% → ~2% — removed 9pp of dead traffic from our core product
+- 90,000 high-intent leads daily from ~50,000 unique users via WhatsApp retargeting
+- Became the highest-volume lead generation channel on the entire platform — more than any paid acquisition
+- In-house model: <₹0.05/query marginal cost, 2-month payback vs. Vertex API costs
+- Feedback loop permanently improved base Elasticsearch search for Hinglish query patterns
 
-**KEY DECISION**: In-house fine-tuning over Google Vertex API — cost + quality control. General models handled Hinglish code-switching poorly because they'd never been trained on India's local search patterns.
+**KEY DECISION**: In-house fine-tuning over Google Vertex API. Two independent reasons, both required: (1) Unit economics — Vertex cost didn't work at 1L+ daily failures. (2) Quality — general models had never seen India's local search code-switching patterns. You can't negotiate better API rates to fix a training data gap. You have to own the model.
 
-**EARNED SECRET**: "Most teams treat their LLM cost problem as procurement — negotiate better API rates. I treated the model as a product I owned."
+**EARNED SECRET**: "Most teams treat their LLM cost problem as procurement — negotiate better API rates. I treated the model as a product I owned. The quality gap on Hinglish wasn't solvable with a better vendor — it was solvable only with proprietary training data from our own search logs. That data moat is the thing you can't buy."
 
-**TECHNICAL DEPTH**: Python (LangChain), Llama 3.2 (fine-tuned for Hinglish), pgvector (semantic matching), ElastiCache, Elasticsearch, RabbitMQ async queue, WhatsApp Business API. P90 latency ~150ms. 8-person team (2 ML engineers, 3 backend, 1 data analyst, 1 QA, PM). Feedback loop cached high-ranking keywords back into Elasticsearch to improve base search.
+**TECHNICAL DEPTH**: Python (LangChain), Llama 3.2 fine-tuned for Hinglish/code-switching on proprietary query logs, pgvector for semantic matching, ElastiCache for high-frequency match caching, Elasticsearch (base search + feedback loop cache), RabbitMQ async queue, WhatsApp Business API. P90 latency ~150ms. Fail-open at 250–300ms. TTL hop-counter of 1. Category taxonomy whitelist to prevent hallucination. 8-person team: 2 ML engineers, 3 backend, 1 data analyst, 1 QA, PM.
 
 **BUSINESS TRADE-OFFS**:
-- In-house fine-tuning vs. Google Vertex API: Vertex deployed faster but per-query cost at 1L+ daily failures was economically unviable at scale. In-house gave 2-month payback and quality control — accepted upfront build risk for long-term economic sustainability.
-- WhatsApp retargeting vs. in-app re-query prompt: WhatsApp gave 40% CTR but required a separate permission flow and a new engagement channel to maintain. In-app prompt was cleaner UX but lower engagement. Chose WhatsApp for volume — 90K leads/day justified the operational complexity.
-- Fix 11% failure vs. improve the other 89%: highest marginal return was on dead traffic generating zero value. Left general search quality for later — concentrated entirely where the gap was largest.
+- In-house fine-tuning vs. Google Vertex API: Vertex deployed faster but the unit economics were broken at 1L+ daily failures AND quality on Hinglish was poor regardless. In-house gave 2-month payback and training data control. Accepted upfront build risk for long-term sustainability.
+- WhatsApp retargeting vs. in-app re-query prompt: WhatsApp gave 40% CTR but required separate permission flow and a new channel to maintain. In-app prompt was cleaner UX but lower engagement. Chose WhatsApp — 90K leads/day justified the operational complexity.
+- Fix 11% failure vs. improve the other 89%: highest marginal return was on dead traffic generating zero value. Left general search quality for later.
 
 **WHAT MADE EXECUTION HARD**:
-- Creating labeled Hinglish training data from scratch — no off-the-shelf dataset for Indian local search query patterns; had to build it from existing query logs through manual annotation.
-- The LLM hallucinated vendor category names that didn't exist in our taxonomy — building and iterating the category whitelist required weeks of QA before results were reliable.
-- Repurposing the existing Whisper pipeline (built for call transcripts) for typed search queries required significant re-architecture of the ingestion layer — the data shapes were fundamentally different.
-- WhatsApp Business API approval and message template restrictions added weeks of compliance work before scale was possible.
+- Creating labeled Hinglish training data from scratch — no off-the-shelf dataset for Indian local search patterns; had to annotate manually from existing query logs before any fine-tuning could begin.
+- The LLM hallucinated vendor category names that didn't exist in our taxonomy — building and iterating the whitelist required weeks of QA before results were reliable enough to touch users.
+- Repurposing the Whisper pipeline (built for audio transcripts) for typed search queries required significant re-architecture of the ingestion layer — the data shapes and preprocessing requirements were fundamentally different.
+- WhatsApp Business API approval and message template restrictions added weeks of compliance work before we could reach scale.
 
 ---
 
@@ -450,39 +466,51 @@
 ### S012 — Headless Booking Engine: Unlocking Call Center Channel, 48% Order Growth
 **LPs**: Invent and Simplify, Think Big, Deliver Results, Bias for Action | **Company**: Justdial
 
-**HOOK**: "I built a headless booking engine that unlocked the call center as a distribution channel — 48% order growth in 3 weeks, with 42% conversion rate (nearly double the app)."
+**HOOK**: "28% of our leads were coming from callers with 2x the conversion rate of our app — and we were serving them with a broken legacy experience. I built a headless booking engine to fix it. 48% order growth in 3 weeks, near-zero CPA."
 
-**SITUATION**: At Justdial, 28% of all leads came from users calling directly — a high-intent cohort. But satisfaction was 2.8-3.2 vs. 4.2 for online JD Xperts users. Same-category repeat for callers was below 5%. The call center operated on a legacy text-based console with a 52-second average call time that couldn't render any modern web interface.
+**SITUATION**: When I analyzed satisfaction data by acquisition channel, a striking pattern emerged: 28% of all JD Xperts leads were coming from users who had called directly. These were our highest-intent users — they'd already picked up the phone. But their experience was terrible: satisfaction ratings of 2.8–3.2 vs. 4.2 for users who booked online. Same-category repeat was below 5%. Most of them never came back.
 
-**TASK**: Give this 28% of high-intent callers access to JD Xperts managed experience without rebuilding legacy infrastructure.
+The root cause: the call center ran on a legacy text-based console with a 52-second average call window. It couldn't render any modern booking interface. So call center agents could take a message and pass it along, but couldn't actually book a JD Xperts service on the caller's behalf in the moment. These users — already acquired, already in the funnel, already the most high-intent cohort we had — were falling into a broken handoff and churning. CPA for this channel was effectively zero. We were already paying for them. We just couldn't serve them.
+
+**TASK**: Get these 28% of callers into the JD Xperts managed experience — structured booking, quality service, proper follow-up — without rebuilding the call center's infrastructure, which was owned by a different team and would take 9–12 months with admin blockers.
 
 **ACTION**:
-1. I chose the pragmatic path: translation layer (weeks) over deep integration (months of admin blockers).
-2. I built a headless booking engine with translation + anti-corruption layers. Created APIs converting between legacy call center XML and our modern JSON services. I defined an idempotency requirement: unique hash based on caller's phone number and 5-minute time window to prevent duplicate orders from agent refreshes/double-clicks.
-3. I designed an async user journey via messaging. Key insight: callers don't need to complete everything on the phone. Order details transported to Xperts OMS, then pushed WhatsApp/SMS deep links. I kept deep links purely informational — no login wall for order status.
+
+*Finding the solution path:*
+I mapped two options: (1) Deep integration — modernize the call center console to render our booking flows natively. Proper long-term answer. But 9–12 months of work with infrastructure access blockers, a separate team's buy-in, and admin approvals we didn't control. The channel would stay broken for a year. (2) Translation layer — build a wrapper that converted between the legacy call center format and our modern OMS. Weeks, not months. Some technical debt, but gets callers into the product immediately.
+
+The unlock that made option 2 viable: I realized callers don't need to complete the booking on the phone. The 52-second window is enough to capture intent and start an order. Everything else — payment details, service confirmation, tracking — can be completed asynchronously via WhatsApp after the call ends. The phone call initiates; digital touchpoints complete. That insight changed the entire design.
+
+*Technical architecture:*
+1. **Translation + anti-corruption layer**: Built APIs converting between the legacy call center's XML format and our modern JSON OMS. The anti-corruption layer was critical — years of inconsistent legacy data models (varied order states, time formats, user ID schemas) would have leaked dirty data into our clean OMS without it. The ACL translated and normalized before anything reached our systems.
+2. **Idempotency layer**: Agents on legacy consoles refresh and double-click. I defined an idempotency key: unique hash of caller's phone number + 5-minute time window. If the same hash arrived twice within the window, the system returned the existing booking rather than creating a duplicate. Designed as a stateless hash so it survived agent session resets on unstable connections.
+3. **Minimal console integration**: Just enough front-end in the call center console for agents to capture service type, location, and time preference within the 52-second window. No more, no less.
+4. **Async messaging pipeline**: Order details passed to the Xperts OMS, which triggered WhatsApp and SMS deep links to the caller's phone. Deep links were purely informational — dropped users directly into service details, payment, and tracking pages. No login wall. For callers who weren't app users, forcing authentication at this stage would have caused drop-off. Removed it entirely.
+5. **Redis short-lived cache**: Maintained multi-turn booking state across the call for agents who needed to look up availability mid-conversation without restarting the booking flow.
 
 **RESULT**:
-- Daily Xperts orders: 135 → 200 (48% growth) within 3 weeks
-- Caller funnel conversion: 42-44% (vs. 23-24% web/app — nearly 2x)
-- Customer satisfaction: 2.8 → 4.5
-- CPA effectively near-zero — most profitable acquisition source
+- Daily Xperts orders: 135 → 200 (48% growth) within 3 weeks of launch
+- Caller funnel conversion: 42–44% — nearly double the 23–24% web/app rate, confirming the intent hypothesis
+- Customer satisfaction: 2.8 → 4.5 (callers now getting the same managed experience as app users)
+- CPA: effectively near-zero — the most profitable acquisition source on the platform
+- Same-category repeat unlocked for caller cohort (was below 5% pre-launch)
 
-**KEY DECISION**: Translation layer (weeks) over full modernization (9-12 months). Async messaging journey rather than cramming into 52-second call.
+**KEY DECISION**: Two decisions, both mattered. (1) Translation layer over full modernization — got the channel live in weeks vs. a year, accepted manageable technical debt. (2) Async messaging journey over in-call completion — the 52-second constraint was the forcing function that led to a better UX design than cramming everything into a phone call.
 
-**EARNED SECRET**: "The call center wasn't a legacy liability — it was an untapped distribution channel with 2x the conversion rate of our app."
+**EARNED SECRET**: "The call center wasn't a legacy liability — it was our highest-converting acquisition channel at near-zero CPA, completely underserved. The design insight was that a phone call doesn't need to complete a booking — it just needs to start one. Everything else can happen asynchronously. Meeting the user in their preferred channel, then handing off to the channel where completion is easiest."
 
-**TECHNICAL DEPTH**: Java wrapper API, XML→JSON translation layer, Redis (short-lived cache for multi-turn booking state), WhatsApp Business API for async post-booking comms, idempotency layer. Anti-corruption layer prevented legacy data model from leaking into clean architecture. Phone call initiates; digital touchpoints complete.
+**TECHNICAL DEPTH**: Java wrapper API service, XML→JSON translation layer with anti-corruption layer (prevents legacy data model from contaminating clean OMS), Redis (short-lived multi-turn booking state cache), WhatsApp Business API + SMS for async post-booking comms, idempotency layer (phone number + 5-minute time window hash — stateless, survives agent session resets). Architecture pattern: phone call initiates → OMS captures order → WhatsApp/SMS deep links complete. No login wall on deep links — critical for non-app caller cohort.
 
 **BUSINESS TRADE-OFFS**:
-- Call center channel vs. digital acquisition investment: same engineering could have gone to digital growth. The case for call center: 28% of leads at 2x digital conversion rate — highest-ROI channel we weren't exploiting. Had to defend investing in a "legacy" channel against a bias toward modern digital.
-- Async messaging journey vs. in-call completion: completing the booking via WhatsApp after the call is a worse UX than completing on the phone. But the 52-second legacy call constraint made in-call completion structurally impossible. Accepted async as necessary, not ideal.
-- Translation layer vs. full legacy system modernization: modernizing the call center system was the "right" long-term answer but required 9-12 months and admin blockers outside product's control. Translation layer in weeks delivered the business outcome without org politics.
+- Call center investment vs. digital growth investment: same engineering capacity could have gone to digital acquisition features. The case for call center: 28% of leads, 2x conversion rate, near-zero CPA — highest ROI channel not being served. Had to argue for a "legacy" channel against organizational bias toward modern digital.
+- Async journey vs. in-call completion: async is worse UX in theory — user has to follow up via WhatsApp after the call. But the 52-second constraint made in-call completion impossible. Async turned out to be a better design anyway — users completed on a larger screen with more time, which raised CSAT.
+- Translation layer tech debt vs. waiting for proper modernization: translation layer creates a maintenance surface (the XML schema can change, the ACL must keep up). Accepted this in exchange for unlocking the channel 10+ months faster.
 
 **WHAT MADE EXECUTION HARD**:
-- The legacy call center system was on infrastructure owned by a different team — no direct access, had to work through a dependency on a team with its own priorities and no stake in the outcome.
-- The XML ↔ JSON translation layer had to handle years of inconsistent legacy schemas with unknown edge cases — these only surfaced in production, requiring post-launch iteration.
-- Training call center agents on the new workflow without disrupting live operations — training had to happen on a live system during operational hours with zero downtime tolerance.
-- Idempotency had to detect both agent double-clicks AND network retries — two different failure modes that overlapped in timing, each requiring different detection logic.
+- The legacy call center system was owned by a different team — no direct infrastructure access, had to work through a dependency with a team that had its own sprint calendar and no business stake in the outcome.
+- The XML schema from the legacy console had undocumented edge cases that only appeared in production: agent-generated order IDs with special characters, time formats with timezone inconsistencies, user lookup mismatches when phone numbers were formatted differently. Each edge case required an ACL patch post-launch.
+- Training call center agents on the new booking workflow had to happen on a live system during operating hours — couldn't take the call center offline for training. Agents were handling real calls while learning the new flow simultaneously.
+- Idempotency detection had to distinguish between two overlapping failure modes: agent double-click (same session, milliseconds apart) and network retry (same session, seconds apart, different network packet). The 5-minute window handled both but required careful testing to confirm it didn't accidentally deduplicate legitimate repeat bookings from the same caller.
 
 ---
 
